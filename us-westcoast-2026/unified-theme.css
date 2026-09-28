@@ -118,6 +118,39 @@ body, body[data-active-view="ledger"] {
 .atlas-links { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 18px; }
 .atlas-links a { color: #275b49; font-size: 12px; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 
+/* The painted plate is shown whole on phones; the enlarged dialog keeps full-size labels. */
+.atlas-map-frame { border-color: #b9a880; background: #315d59; box-shadow: 5px 6px 0 #d3c39f; }
+.atlas-map-scroll { overflow: hidden; }
+.atlas-svg { width: 100%; min-width: 0; }
+.atlas-image-wash { fill: #f8e9c7; opacity: .035; pointer-events: none; }
+.atlas-water { fill: #f6e6bd; font: italic 600 42px/1 Georgia, serif; letter-spacing: .18em; paint-order: stroke; stroke: #19454c; stroke-width: 2; }
+.atlas-water-small { font-size: 29px; letter-spacing: .27em; }
+.atlas-state { fill: #f7e9c6; font: 750 21px/1 Georgia, serif; letter-spacing: .18em; paint-order: stroke; stroke: #5b5c3e; stroke-width: 2; }
+.atlas-credit { fill: #fff0cf; font: 800 11px/1 ui-monospace, monospace; letter-spacing: .13em; paint-order: stroke; stroke: #1a4547; stroke-width: 3; }
+.atlas-track-under { fill: none; stroke: #153d32; stroke-width: 13; stroke-linecap: round; stroke-linejoin: round; opacity: .86; }
+.atlas-track { fill: none; stroke: #f3b452; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 2px 1px #173e2d7a); }
+.atlas-track-under.is-muted { stroke-width: 9; stroke-dasharray: 8 11; opacity: .38; }
+.atlas-track.is-muted { stroke: #fff0ca; stroke-width: 3; stroke-dasharray: 8 11; opacity: .75; }
+.atlas-track-under.is-active { stroke-width: 15; opacity: .93; }
+.atlas-track.is-active { stroke: #f1a849; stroke-width: 6; stroke-dasharray: none; opacity: 1; }
+.atlas-stop.is-muted { opacity: .65; }
+.atlas-stop-halo { fill: #f4b055; opacity: .27; }
+.atlas-stop-ring { fill: #fbefcf; stroke: #bd592e; stroke-width: 3.5; }
+.atlas-stop-core { fill: #bd592e; }
+.atlas-stop-card { fill: #173e2d; stroke: #e6b977; stroke-width: 1.4; filter: drop-shadow(3px 4px 2px #183a327a); }
+.atlas-stop-en { fill: #fff2d7; font: 800 13px/1 Arial, sans-serif; letter-spacing: .09em; stroke: none; }
+.atlas-stop-zh { fill: #f1bd79; font: 700 15px/1 "Songti SC", sans-serif; stroke: none; }
+.atlas-stop:hover .atlas-stop-card, .atlas-stop:focus .atlas-stop-card { fill: #a84f2e; }
+.atlas-map-footer { color: #345448; background: #f6e8ca; line-height: 1.4; }
+.atlas-map-footer span { min-width: 0; }
+.atlas-stop-key { display: flex; gap: 7px; overflow-x: auto; margin-top: 17px; padding: 2px 1px 6px; scrollbar-width: thin; }
+.atlas-stop-key a { flex: 0 0 auto; min-height: 37px; display: inline-flex; align-items: center; gap: 6px; padding: 0 11px; border: 1px solid var(--line); border-radius: 999px; color: var(--forest); background: #fff7e5; text-decoration: none; font-size: 12px; font-weight: 750; white-space: nowrap; }
+.atlas-stop-key a.is-muted { opacity: .63; }
+.atlas-stop-key a small { color: var(--terracotta); font: 800 10px/1 ui-monospace, monospace; }
+.atlas-stop-key a span { color: var(--terracotta); font-size: 14px; }
+.atlas-stop-key a:hover { border-color: var(--terracotta); }
+.map-dialog .atlas-svg { width: 100%; min-width: 700px; }
+
 /* Accounting uses the same paper, ink and card treatment. */
 .ledger-view, body[data-active-view="ledger"] .ledger-view { background: transparent; }
 .ledger-app { color: var(--ink); }
