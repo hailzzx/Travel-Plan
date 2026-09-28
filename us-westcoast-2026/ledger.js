@@ -391,13 +391,13 @@
       });
     }
     let previous = null;
-    const collections = ["bills", "travelers"];
+    const collections = ["bills", "travelers", "settings"];
     const rawApiBase = String(options.apiBase || "/api/trip").trim();
     if (!/^\/(?!\/)/.test(rawApiBase) || rawApiBase.includes("\\") || /[?#]/.test(rawApiBase)) {
       throw new Error("D1 apiBase must be a same-origin absolute path");
     }
     const apiBase = rawApiBase.replace(/\/+$/, "") || "/";
-    const endpoint = `${apiBase}/${encodeURIComponent(tripId)}?collections=bills%2Ctravelers`;
+    const endpoint = `${apiBase}/${encodeURIComponent(tripId)}?collections=bills%2Ctravelers%2Csettings`;
     return {
       mode: "d1",
       async load() {
@@ -409,6 +409,12 @@
       async save(next) {
         const changes = [];
         for (const collection of collections) {
+          if (collection === "settings") {
+            if (JSON.stringify(previous?.settings) !== JSON.stringify(next.settings)) {
+              changes.push({ op: "upsert", collection, id: "ledger", value: { ...next.settings, id: "ledger" } });
+            }
+            continue;
+          }
           const before = new Map((previous?.[collection] || []).map((item) => [item.id, item]));
           const after = new Map((next[collection] || []).map((item) => [item.id, item]));
           before.forEach((_, id) => { if (!after.has(id)) changes.push({ op: "delete", collection, id }); });
@@ -417,7 +423,7 @@
           });
         }
         const response = await fetch(endpoint, {
-          method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ changes })
+          method: "POST", headers: { "content-type": "application/json", "x-travel-actor": globalThis.TravelProfile?.getActor() || "" }, body: JSON.stringify({ changes })
         });
         if (!response.ok) throw new Error(`API ${response.status}`);
         previous = await response.json();

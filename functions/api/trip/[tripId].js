@@ -1,5 +1,5 @@
 const TRIP_ID = "usa-west-coast-2026-10";
-const COLLECTIONS = new Set(["bills", "travelers", "tickets"]);
+const COLLECTIONS = new Set(["bills", "travelers", "tickets", "settings"]);
 
 function json(data, status = 200) {
   return Response.json(data, { status, headers: { "Cache-Control": "no-store" } });
@@ -16,7 +16,14 @@ async function snapshot(db, tripId, collections) {
   for (const collection of collections) {
     const rows = await db.prepare("SELECT value_json FROM trip_records WHERE trip_id = ? AND collection = ? ORDER BY record_id")
       .bind(tripId, collection).all();
-    result[collection] = (rows.results || []).map((row) => JSON.parse(row.value_json));
+    const records = (rows.results || []).map((row) => JSON.parse(row.value_json));
+    if (collection === "settings") {
+      const record = records.find((item) => item.id === "ledger");
+      if (record) {
+        const { id, ...settings } = record;
+        result.settings = settings;
+      }
+    } else result[collection] = records;
   }
   return result;
 }
@@ -51,10 +58,11 @@ export async function onRequestPost(context) {
   const statements = [];
   for (const change of changes) {
     const { collection, op, value } = change || {};
-    const id = String(value?.id || "");
+    const id = String(change?.id || value?.id || "");
     if (!collections.includes(collection) || !["upsert", "delete"].includes(op) || !/^[a-z0-9][a-z0-9._:-]{0,119}$/i.test(id)) {
       return json({ error: "Invalid record change" }, 400);
     }
+    if (collection === "settings" && id !== "ledger") return json({ error: "Invalid settings record" }, 400);
     if (op === "delete") {
       statements.push(context.env.TRAVEL_DB.prepare("DELETE FROM trip_records WHERE trip_id = ? AND collection = ? AND record_id = ?")
         .bind(TRIP_ID, collection, id));
