@@ -1,0 +1,211 @@
+/* Home cover: a weathered California road gazette. */
+:root {
+  --broadside-paper: #e8d3a9;
+  --broadside-ink: #302318;
+  --broadside-rule: #765638;
+  --broadside-red: #813f2c;
+}
+body[data-active-tab="home"] {
+  background-color: #e7dcc5;
+  background-image: repeating-linear-gradient(0deg, rgba(93, 69, 39, .018) 0 1px, transparent 1px 4px);
+}
+.travel-panel--home { width: min(100%, 940px); padding: 22px 16px 42px; }
+.home-topline {
+  min-height: 53px;
+  margin-bottom: 16px;
+  padding: 0 4px 8px;
+  border-bottom: 4px double var(--broadside-ink);
+}
+.home-edition {
+  color: var(--broadside-ink);
+  font: 900 clamp(17px, 3vw, 24px)/1.05 Georgia, "Times New Roman", serif;
+  letter-spacing: -.04em;
+  white-space: normal;
+}
+.home-edition span { color: var(--broadside-red); }
+.departure-pill {
+  min-height: 34px;
+  padding: 5px 8px;
+  border: 1px solid var(--broadside-rule);
+  border-radius: 0;
+  background: #f2e7d0;
+  box-shadow: none;
+  color: var(--broadside-ink);
+  font: 750 11px/1.2 Georgia, "Songti SC", serif;
+}
+.departure-pill i { background: var(--broadside-red); border-radius: 0; }
+
+.hero {
+  display: block;
+  min-height: 0;
+  padding: clamp(15px, 3vw, 25px);
+  overflow: hidden;
+  border: 1px solid #61462d;
+  border-radius: 0;
+  background-color: var(--broadside-paper);
+  background-image:
+    radial-gradient(circle at 48% 38%, rgba(255, 248, 223, .63), transparent 60%),
+    radial-gradient(circle at 5% 8%, rgba(120, 82, 40, .15), transparent 24%),
+    radial-gradient(circle at 98% 95%, rgba(102, 65, 29, .17), transparent 28%),
+    repeating-linear-gradient(0deg, rgba(77, 52, 27, .023) 0 1px, transparent 1px 4px);
+  box-shadow: 6px 7px 0 rgba(71, 48, 27, .17), 0 20px 45px rgba(71, 48, 27, .13);
+  color: var(--broadside-ink);
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  z-index: 0;
+  border: 1px solid rgba(91, 58, 29, .6);
+  background: transparent;
+  pointer-events: none;
+}
+.hero::after { display: none; }
+.hero__copy { position: relative; z-index: 1; padding: 18px clamp(8px, 2vw, 20px) 0; }
+.hero__eyebrow {
+  margin: 0 0 clamp(20px, 3vw, 30px);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--broadside-rule);
+  color: #4a3222;
+  text-align: center;
+  font: 900 clamp(11px, 1.5vw, 14px)/1.25 Georgia, "Times New Roman", serif;
+  letter-spacing: .24em;
+}
+.hero__masthead {
+  display: block;
+  color: var(--broadside-ink);
+  text-align: center;
+  font: 900 clamp(70px, 18vw, 150px)/.78 Georgia, "Times New Roman", serif;
+  letter-spacing: -.08em;
+  white-space: nowrap;
+}
+.hero__masthead span { display: block; color: var(--broadside-ink); }
+.hero__rule {
+  display: block;
+  height: 5px;
+  margin: clamp(22px, 4vw, 39px) 0 15px;
+  border-top: 2px solid var(--broadside-ink);
+  border-bottom: 1px solid var(--broadside-ink);
+  background: transparent;
+}
+.hero__subline { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: clamp(17px, 3vw, 31px); }
+.hero__days {
+  margin: 0;
+  padding-right: clamp(18px, 3vw, 30px);
+  border-right: 1px solid var(--broadside-rule);
+  color: var(--broadside-red);
+  font: 900 clamp(43px, 7.3vw, 72px)/.96 Georgia, "Times New Roman", serif;
+  letter-spacing: -.07em;
+  white-space: nowrap;
+}
+.hero__title-wrap { min-width: 0; }
+.hero h1 {
+  margin: 0;
+  color: var(--broadside-ink);
+  font: 800 clamp(26px, 4.5vw, 42px)/1.13 Georgia, "Songti SC", serif;
+  letter-spacing: .025em;
+}
+.hero__date {
+  display: block;
+  width: fit-content;
+  margin: 7px 0 0;
+  padding: 0;
+  background: transparent;
+  color: #4c3726;
+  font: 800 clamp(12px, 1.6vw, 15px)/1.4 Georgia, "Songti SC", serif;
+  letter-spacing: .04em;
+}
+.hero__engraving {
+  position: relative;
+  z-index: 1;
+  margin: clamp(19px, 3vw, 30px) 0 0;
+  padding: 0;
+}
+.hero__engraving img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.8;
+  object-fit: cover;
+  object-position: center 51%;
+  border: 1px solid #65492c;
+  filter: sepia(.1) contrast(1.04);
+}
+.hero__engraving figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 7px;
+  padding: 0 2px 11px;
+  border-bottom: 4px double var(--broadside-ink);
+  color: #62452e;
+  font: 750 clamp(9px, 1.3vw, 12px)/1.2 Georgia, "Times New Roman", serif;
+  letter-spacing: .1em;
+}
+.hero__destination {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  min-height: 0;
+  margin: 0;
+  padding: clamp(19px, 3vw, 28px) clamp(8px, 2vw, 20px) 10px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--broadside-ink);
+}
+.hero__destination span {
+  color: var(--broadside-red);
+  font: 900 clamp(10px, 1.35vw, 13px)/1.2 Georgia, "Times New Roman", serif;
+  letter-spacing: .17em;
+}
+.hero__destination strong {
+  display: block;
+  margin-top: 9px;
+  color: var(--broadside-ink);
+  font: 800 clamp(21px, 3.6vw, 34px)/1.14 Georgia, "Times New Roman", serif;
+}
+.hero__destination small {
+  display: block;
+  margin-top: 8px;
+  color: #4e3928;
+  font: 700 clamp(13px, 1.65vw, 16px)/1.5 Georgia, "Songti SC", serif;
+}
+.hero__destination a {
+  width: 47px;
+  height: 47px;
+  flex-basis: 47px;
+  border: 1px solid var(--broadside-ink);
+  border-radius: 50%;
+  background: var(--broadside-ink);
+  color: #f1e2c3;
+}
+.home-shortcuts {
+  margin-top: 22px;
+  border-top: 4px double var(--broadside-ink);
+  border-bottom: 4px double var(--broadside-ink);
+  background: #efe2c7;
+}
+.home-shortcuts a { padding-block: 22px; }
+.home-shortcuts a + a { border-color: #b49b77; }
+.home-shortcuts a span { color: var(--broadside-red); font: 900 11px/1.2 Georgia, serif; letter-spacing: .12em; }
+.home-shortcuts a strong { color: var(--broadside-ink); font: 800 clamp(20px, 2.6vw, 24px)/1.2 Georgia, "Songti SC", serif; }
+.home-shortcuts a b { color: var(--broadside-ink); }
+body[data-active-tab="home"] .bottom-tabs { border-color: #503a28; background: #38291d; }
+body[data-active-tab="home"] .bottom-tabs a[aria-current="page"] { background: #ead5af; color: var(--broadside-ink); }
+body[data-active-tab="home"] .bottom-tabs a[aria-current="page"] svg { color: var(--broadside-red); }
+
+@media (max-width: 600px) {
+  .hero__subline { grid-template-columns: 1fr; gap: 9px; }
+  .hero__days { width: fit-content; padding: 0 0 7px; border-right: 0; border-bottom: 1px solid var(--broadside-rule); }
+  .hero__engraving img { aspect-ratio: 1.32; }
+  .hero__engraving figcaption { font-size: 9px; letter-spacing: .04em; }
+}
+@media (max-width: 380px) {
+  .home-edition { font-size: 15px; }
+  .departure-pill { font-size: 10px; }
+  .hero__masthead { font-size: clamp(60px, 18vw, 70px); }
+  .hero__days { font-size: 46px; }
+  .hero__destination a { width: 42px; height: 42px; flex-basis: 42px; }
+}
