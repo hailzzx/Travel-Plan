@@ -1,0 +1,169 @@
+/* West/26 Pocket: one visual language across all five views. */
+:root {
+  --paper: #efe5cc;
+  --surface: #fff8e8;
+  --ink: #173a2b;
+  --muted: #637467;
+  --line: #d8c9a8;
+  --lake: #315d50;
+  --lake-soft: #e4e9d9;
+  --forest: #173e2d;
+  --terracotta: #cf6539;
+  --shadow: 0 15px 38px rgba(55, 49, 26, .13);
+}
+html { background: var(--paper); }
+body, body[data-active-view="ledger"] {
+  color: var(--ink);
+  background: radial-gradient(circle at 18% 0%, #f8edcf, var(--paper) 50%, #e8dbc1);
+}
+
+/* Cover: the same sunlit coast and colors as the original Travel reference. */
+.travel-panel--home { width: min(100%, 800px); padding: 18px 16px 38px; }
+.home-topline { padding: 0 2px; border: 0; }
+.home-edition { color: var(--forest); font: 950 clamp(16px, 4.6vw, 25px)/1 Impact, "Arial Narrow", system-ui, sans-serif; letter-spacing: -.035em; }
+.home-edition span { color: var(--terracotta); }
+.departure-pill { border: 1px solid #cfc4a4; background: #f9efdbbd; color: var(--forest); }
+.hero {
+  min-height: clamp(610px, 137vw, 800px);
+  border: 1px solid #cdbb99;
+  border-radius: 31px;
+  background: linear-gradient(180deg, #f5e7c8f5 0%, #f4e3bcdb 34%, #f4e3bc1c 62%, transparent 78%), url("assets/hero-west-coast.webp") center center / cover no-repeat;
+  box-shadow: 0 20px 40px #433f2c2b, inset 0 1px #fff8;
+}
+.hero::after { inset: 65% 0 0; background: linear-gradient(180deg, transparent, #102c226b); }
+.hero__copy { position: relative; z-index: 1; padding: clamp(33px, 6vw, 62px) clamp(24px, 6vw, 54px) 0; }
+.hero__eyebrow { color: #305442; font-size: clamp(10px, 1.7vw, 12px); letter-spacing: .18em; }
+.hero__masthead { color: #103a2a; font-size: clamp(63px, 17vw, 146px); line-height: .84; letter-spacing: -.07em; }
+.hero__masthead span { color: var(--terracotta); }
+.hero__rule { position: relative; height: 2px; margin: 22px 0 20px; background: var(--terracotta); }
+.hero__rule::after { content: ""; position: absolute; left: 67%; top: -5px; width: 12px; height: 12px; border: 3px solid #f6e6c7; border-radius: 50%; background: var(--terracotta); }
+.hero__days { color: #103a2a; font: 500 clamp(52px, 12.5vw, 93px)/.91 Georgia, "Songti SC", serif; letter-spacing: -.052em; }
+.hero h1 { margin-top: 9px; color: #103a2a; font: 700 clamp(28px, 6vw, 44px)/1.15 Georgia, "Songti SC", serif; letter-spacing: .035em; }
+.hero__date { display: inline-block; margin-top: 16px; padding: 6px 8px; color: #214835; background: #f7e9ccab; font-size: clamp(11px, 1.5vw, 13px); font-weight: 800; }
+.hero__map-stamp { position: absolute; z-index: 1; left: clamp(26px, 6vw, 55px); bottom: 145px; padding: 8px 11px; border: 1px solid #a8895b; color: #f9e9c8; background: #173e2deb; box-shadow: 4px 4px 0 #cf6539ac; font: 800 11px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .07em; }
+.hero__map-stamp i { display: inline-block; width: 25px; height: 1px; margin: 0 6px 4px; background: #eaa758; }
+.hero__destination { position: relative; z-index: 2; min-height: 100px; border-color: #aa9569; border-radius: 2px; background: #173e2df2; box-shadow: 7px 7px 0 #c96c3bc2; }
+.hero__destination strong { color: #fff7e8; }
+.hero__destination small { color: #d8deca; }
+.hero__destination a { background: #efb34f; }
+.home-shortcuts a { background: #f9f0dcd9; }
+.home-shortcuts a strong { color: var(--forest); }
+
+/* Shared interior pages: warm cards, green titles, orange wayfinding. */
+.panel-intro { border-bottom: 2px solid var(--forest); }
+.panel-intro h2, .section-heading h2 { color: var(--forest); }
+.panel-intro > span, .section-kicker, .day-meta, .stay-card__number { color: var(--terracotta); }
+.day-toggle, .stay-card, .accordion { border-color: var(--line); border-radius: 17px; background: #fff7e5; box-shadow: 4px 5px 0 #d8c9aa; }
+.day-toggle[aria-expanded="true"] { border-radius: 17px 17px 0 0; }
+.day-detail { border-color: var(--line); background: #fffaf0; }
+.stay-card { padding: 19px 17px; }
+.stay-card h3, .day-title { color: var(--forest); }
+.stay-map-link { display: inline-block; border-bottom: 1px solid currentColor; color: #295c4d; text-decoration: none; line-height: 1.6; }
+.stay-map-link:hover, .atlas-links a:hover { color: var(--terracotta); }
+.stay-map-link small { display: block; margin: 1px 0 6px; color: var(--muted); font-size: 10px; }
+.flight-card, .rental-panel { background: var(--forest); }
+.flight-card { border-color: #49654f; border-radius: 21px; box-shadow: 7px 7px 0 #cabb9c; }
+.rental-panel { border-radius: 20px; }
+.rental-countdown { background: #bd6a3f; }
+.return-deadline { background: #f3e1c1; }
+.accordion summary { color: var(--forest); }
+.accordion ul { color: #4e6054; }
+.todo-form input { border-color: var(--line); background: #fff8e8; }
+.todo-form button { background: var(--forest); }
+.route-caption { color: var(--muted); }
+.map-dialog { max-width: 1100px; background: var(--paper); }
+.map-dialog #map-dialog-content { overflow-x: auto; }
+.map-dialog .atlas-svg { min-width: 700px; }
+
+/* Geographic route atlas. */
+.atlas-head { display: flex; justify-content: space-between; align-items: baseline; gap: 15px; margin: 0 0 13px; padding-bottom: 10px; border-bottom: 1px solid var(--forest); }
+.atlas-head span { color: var(--terracotta); font: 800 10px/1.2 ui-monospace, monospace; letter-spacing: .16em; }
+.atlas-head strong { color: var(--forest); font: 850 14px/1 Impact, "Arial Narrow", system-ui, sans-serif; letter-spacing: .1em; }
+.atlas-head i { color: var(--terracotta); font-style: normal; }
+.atlas-day-tabs { display: flex; flex-wrap: nowrap; gap: 5px; overflow-x: auto; padding: 0 1px 11px; scrollbar-width: thin; }
+.atlas-day-tabs button { flex: 0 0 auto; min-width: 55px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 9px; color: var(--forest); background: #f9efda; font: 800 11px/1.2 ui-monospace, monospace; }
+.atlas-day-tabs button[aria-pressed="true"] { border-color: var(--forest); background: var(--forest); color: #fff4dc; box-shadow: none; }
+.atlas-map-frame { overflow: hidden; border: 1px solid #b6c6b3; border-radius: 17px; background: #bdd0d0; box-shadow: 5px 6px 0 #d7c9a9; }
+.atlas-map-scroll { overflow-x: auto; scrollbar-width: thin; }
+.atlas-svg { display: block; width: 100%; min-width: 670px; height: auto; }
+.atlas-water { fill: #3c7774; font: italic 500 48px/1 Georgia, serif; letter-spacing: .14em; }
+.atlas-water-small { font-size: 35px; letter-spacing: .18em; }
+.atlas-state { fill: #8f8f6c; font: 700 21px/1 ui-monospace, monospace; letter-spacing: .25em; }
+.atlas-neighbor { fill: #999c83; font: 650 15px/1 ui-monospace, monospace; letter-spacing: .25em; }
+.atlas-credit { fill: #3f746e; font: 650 10px/1 ui-monospace, monospace; letter-spacing: .09em; }
+.atlas-track { fill: none; stroke: #c65e37; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.atlas-track.is-muted { stroke: #879c91; stroke-width: 2.5; stroke-dasharray: 7 8; opacity: .6; }
+.atlas-stop { cursor: pointer; text-decoration: none; }
+.atlas-stop.is-muted { opacity: .44; }
+.atlas-stop-ring { fill: #faf3dd; stroke: #b9522f; stroke-width: 3; }
+.atlas-stop-core { fill: #b9522f; }
+.atlas-stop-en { fill: #173e2d; font: 750 16px/1 Arial, sans-serif; letter-spacing: .04em; paint-order: stroke; stroke: #f5eddc; stroke-width: 3; }
+.atlas-stop-zh { fill: #295143; font: 600 15px/1 "Songti SC", sans-serif; paint-order: stroke; stroke: #f5eddc; stroke-width: 3; }
+.atlas-stop:hover .atlas-stop-ring { fill: #f2b34e; }
+.atlas-map-footer { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 9px 14px; color: #466356; background: #f6edd9; font-size: 11px; }
+.atlas-map-footer button { border: 0; padding: 5px; background: transparent; color: var(--forest); font: 800 11px/1 system-ui, sans-serif; cursor: pointer; white-space: nowrap; }
+.atlas-story-heading { display: flex; justify-content: space-between; align-items: end; gap: 10px; margin: 30px 0 12px; }
+.atlas-story-heading span { color: var(--terracotta); font: 800 10px/1 ui-monospace, monospace; letter-spacing: .13em; }
+.atlas-story-heading h3 { margin: 5px 0 0; color: var(--forest); font: 650 27px/1.1 Georgia, "Songti SC", serif; }
+.atlas-story-heading small { color: var(--muted); font-size: 11px; }
+.atlas-legs { border-top: 2px solid var(--forest); }
+.atlas-leg { display: grid; grid-template-columns: 51px 1fr; gap: 10px 17px; padding: 18px 2px 20px; border-bottom: 1px solid var(--line); }
+.atlas-leg-index span { display: block; color: var(--terracotta); font: italic 500 29px/.95 Georgia, serif; }
+.atlas-leg-index small { color: var(--muted); font: 700 10px/1.2 ui-monospace, monospace; }
+.atlas-leg-copy h4 { margin: 0 0 4px; color: var(--forest); font: 700 18px/1.2 Georgia, "Songti SC", serif; }
+.atlas-leg-copy p { margin: 6px 0 0; color: #53665a; font-size: 12px; line-height: 1.6; }
+.atlas-leg-copy .atlas-leg-cities { color: #284c3b; font-weight: 750; }
+.atlas-leg-copy .atlas-leg-warning { margin-top: 11px; padding: 10px 12px; border-left: 3px solid var(--terracotta); background: #f4e2ce; color: #7c4030; }
+.atlas-leg-time { grid-column: 2; color: #a94f30; font: 800 12px/1.35 ui-monospace, monospace; }
+.atlas-links { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 18px; }
+.atlas-links a { color: #275b49; font-size: 12px; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+/* Accounting uses the same paper, ink and card treatment. */
+.ledger-view, body[data-active-view="ledger"] .ledger-view { background: transparent; }
+.ledger-app { color: var(--ink); }
+.ledger-page-header h1 { color: var(--forest); font-family: Georgia, "Songti SC", serif; font-weight: 700; letter-spacing: -.035em; }
+.ledger-section-heading h2, .ledger-members-strip-heading strong { color: var(--forest); }
+.ledger-section-kicker { color: var(--terracotta); }
+.ledger-tabs { border-bottom-color: var(--line); }
+.ledger-tab { color: #657365; }
+.ledger-tab.ledger-is-active { color: var(--forest); }
+.ledger-tab.ledger-is-active::after { background: var(--terracotta); }
+.ledger-entry-card, .ledger-list-section, .ledger-stats-overview, .ledger-transfer-row, .ledger-member-stat { border-color: var(--line); background: #fff8e8; box-shadow: 4px 5px 0 #d9cbae; }
+.ledger-entry-card, .ledger-list-section, .ledger-stats-overview { border-radius: 18px; }
+.ledger-stats-overview { border-top: 5px solid var(--terracotta); }
+.ledger-field-label, .ledger-fieldset legend, .ledger-list-total span { color: #667469; }
+.ledger-select, .ledger-input, .ledger-note-field .ledger-input, .ledger-date-field .ledger-input, .ledger-field-amount .ledger-amount-input, .ledger-converted-input-wrap, .ledger-currency-dropdown summary { border-color: #cfc5a9; background: #fffcf2; }
+.ledger-input:focus, .ledger-select:focus, .ledger-amount-input:focus, .ledger-currency-dropdown[open] summary { border-color: var(--forest); box-shadow: 0 0 0 3px #315d5026; }
+.ledger-category-choice { color: #53675b; background: #f5ead5; }
+.ledger-category-choice:has(input:checked) { border-color: #a7bea5; color: var(--forest); background: #e4ead8; }
+.ledger-person-input:checked + .ledger-person-visual .ledger-avatar { box-shadow: 0 0 0 2px #fff8e8, 0 0 0 4px var(--forest); }
+.ledger-person-check, .ledger-primary-button, .ledger-secondary-button { background: var(--forest); }
+.ledger-text-button, .ledger-add-person, .ledger-currency-select-button .ledger-currency-symbol, .ledger-currency-chip b { color: var(--forest); }
+.ledger-icon-button, .ledger-onboarding, .ledger-dialog, .ledger-currency-select-button, .ledger-currency-menu, .ledger-currency-result { border-color: var(--line); background: #fff8e8; }
+.ledger-dialog { box-shadow: 0 25px 60px #2d2d1d45; }
+.ledger-dialog-header { border-bottom-color: var(--line); }
+.ledger-dialog-close { color: var(--forest); background: #eee2c9; }
+.ledger-currency-dropdown summary, .ledger-field-amount .ledger-amount-input { background: #fffcf2; }
+.ledger-currency-option:hover, .ledger-currency-option[aria-current="true"] { color: var(--forest); background: #e7ebda; }
+.ledger-currency-search { border-color: var(--line); color: var(--forest); background: #fffaf0; }
+.ledger-transfer-amount { color: var(--terracotta); }
+.ledger-positive strong, .ledger-member-metrics dd.ledger-positive { color: var(--forest); }
+.ledger-confirm-dialog { border-color: var(--line); background: #fff8e8; }
+.ledger-confirm-actions button { background: #fffcf2; }
+
+.bottom-tabs { border-color: #294037; background: #132b2d; }
+.bottom-tabs a { color: #b0bbb4; }
+.bottom-tabs a[aria-current="page"] { color: #fff5df; background: #263e3c; }
+.bottom-tabs a[aria-current="page"] svg { color: #ed7854; }
+
+@media (min-width: 700px) {
+  .hero { min-height: 800px; }
+  .atlas-leg { grid-template-columns: 58px 1fr auto; align-items: start; }
+  .atlas-leg-time { grid-column: 3; white-space: nowrap; padding-top: 3px; }
+}
+@media (max-width: 380px) {
+  .hero__masthead { font-size: 16.3vw; }
+  .hero__days { font-size: 12.6vw; }
+  .hero__map-stamp { bottom: 136px; font-size: 10px; }
+  .atlas-story-heading small { max-width: 104px; text-align: right; }
+}
