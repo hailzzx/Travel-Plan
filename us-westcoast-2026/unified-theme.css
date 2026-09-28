@@ -11,6 +11,38 @@
   --terracotta: #cf6539;
   --shadow: 0 15px 38px rgba(55, 49, 26, .13);
 }
+
+/* The crew picker is a lightweight identity label, shared across the trip UI. */
+.profile-switch { position: fixed; z-index: 90; top: max(12px, env(safe-area-inset-top)); right: 14px; min-height: 38px; padding: 4px 11px 4px 4px; display: flex; align-items: center; gap: 7px; border: 1px solid #d0bc94; border-radius: 99px; color: #173e2d; background: #fff8e8ed; box-shadow: 0 3px 12px #3c352629; font-size: 11px; font-weight: 800; cursor: pointer; }
+.profile-switch[hidden] { display: none; }
+.profile-switch span:first-child { width: 29px; height: 29px; display: grid; place-items: center; border-radius: 50%; color: #fff8e8; background: #315d50; font-size: 10px; }
+.profile-dialog { width: min(92vw, 520px); max-height: min(88dvh, 700px); padding: 0; border: 1px solid #c5b18c; border-radius: 24px; color: #173e2d; background: #fff8e8; box-shadow: 10px 11px 0 #cbb993; }
+.profile-dialog::backdrop { background: #10291fe0; backdrop-filter: blur(5px); }
+.profile-dialog__inner { padding: clamp(26px, 7vw, 40px); }
+.profile-kicker { margin: 0 0 15px; color: #cf6539; font: 800 11px/1.2 ui-monospace, Menlo, monospace; letter-spacing: .16em; }
+.profile-dialog h2 { margin: 0; color: #173e2d; font: 700 clamp(30px, 8vw, 44px)/1.13 Georgia, "Songti SC", serif; }
+.profile-dialog h2 + p { margin: 12px 0 22px; color: #637467; font-size: 13px; line-height: 1.6; }
+.profile-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
+.profile-grid button { min-height: 128px; padding: 16px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; border: 1px solid #d6c7a6; border-radius: 15px; color: #173e2d; background: #f8edda; cursor: pointer; }
+.profile-grid button:hover, .profile-grid button:focus-visible { border-color: #cf6539; outline-color: #cf6539; background: #f5e5cd; }
+.profile-grid button span { width: 47px; height: 47px; display: grid; place-items: center; border-radius: 50%; color: #fff8e8; background: #315d50; font: 750 15px/1 Georgia, serif; }
+.profile-grid button:nth-child(2) span { background: #cf6539; }
+.profile-grid button:nth-child(3) span { background: #825e99; }
+.profile-grid button:nth-child(4) span { background: #aa7f3d; }
+.profile-grid strong { font-size: 15px; }
+.profile-grid small { color: #a05233; font-size: 10px; font-weight: 800; }
+.profile-note { display: block; margin-top: 20px; color: #637467; font-size: 11px; line-height: 1.5; }
+.ledger-bill-note-static { margin: 0; color: #637467; font-size: 12px; line-height: 1.5; }
+html[data-can-edit="false"] .day-edit-actions,
+html[data-can-edit="false"] .itinerary-tools > div,
+html[data-can-edit="false"] .ledger-entry-card,
+html[data-can-edit="false"] .ledger-row-actions,
+html[data-can-edit="false"] .ledger-add-person,
+html[data-can-edit="false"] .ledger-members-strip-heading [data-ledger-action="open-members"],
+html[data-can-edit="false"] .ledger-header-actions,
+html[data-can-edit="false"] .ledger-bill-note-trigger { display: none !important; }
+html[data-can-edit="false"] [data-ledger-action]:not([data-ledger-action="set-tab"]) { display: none !important; }
+html[data-can-edit="false"] .schedule-ticket input { pointer-events: none; }
 html { background: var(--paper); }
 body, body[data-active-view="ledger"] {
   color: var(--ink);

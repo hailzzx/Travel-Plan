@@ -12,17 +12,33 @@
   <link rel="stylesheet" href="styles.css?v=20260910-3">
   <link rel="stylesheet" href="ledger.css?v=20260910-2">
   <link rel="stylesheet" href="poster-theme.css?v=20260928-3">
-  <link rel="stylesheet" href="unified-theme.css?v=20260928-4">
-  <script src="runtime-storage.js?v=20260910-2" defer></script>
+  <link rel="stylesheet" href="unified-theme.css?v=20260928-5">
+  <script src="travel-profile.js?v=20260928-1" defer></script>
+  <script src="runtime-storage.js?v=20260928-1" defer></script>
   <script src="overview-map.js?v=20260910-2" defer></script>
   <script src="atlas-ui.js?v=20260928-2" defer></script>
-  <script src="app.js?v=20260928-5" defer></script>
-  <script src="itinerary-editor.js?v=20260928-1" defer></script>
+  <script src="app.js?v=20260928-6" defer></script>
+  <script src="itinerary-editor.js?v=20260928-2" defer></script>
   <script src="ticket-pdf-preview.js?v=20260910-2" defer></script>
-  <script src="ledger.js?v=20260928-1" defer></script>
+  <script src="ledger.js?v=20260928-2" defer></script>
   <script src="site-navigation.js?v=20260910-2" defer></script>
 </head>
 <body>
+  <button class="profile-switch" id="profile-switch" type="button" aria-label="切换旅行成员" hidden><span id="profile-switch-initial"></span><span id="profile-switch-name"></span></button>
+  <dialog class="profile-dialog" id="profile-dialog" aria-labelledby="profile-title">
+    <div class="profile-dialog__inner">
+      <p class="profile-kicker">WEST / 26 · TRAVEL CREW</p>
+      <h2 id="profile-title">你是哪位旅伴？</h2>
+      <p>选择头像进入旅行页面。这个浏览器会记住你的选择。</p>
+      <div class="profile-grid">
+        <button type="button" data-profile="Zixiang"><span>Zi</span><strong>Zixiang</strong></button>
+        <button type="button" data-profile="Ziqi"><span>Zq</span><strong>Ziqi</strong></button>
+        <button type="button" data-profile="Weiyang"><span>Wy</span><strong>Weiyang</strong><small>可编辑</small></button>
+        <button type="button" data-profile="Chentao"><span>Ct</span><strong>Chentao</strong></button>
+      </div>
+      <small class="profile-note">头像只用于区分页面内的身份，不需要登录。</small>
+    </div>
+  </dialog>
   <a class="skip-link" id="skip-link" href="#main">跳到主要内容</a>
   <header class="topbar" id="topbar">
     <a class="wordmark" id="wordmark" href="#top" aria-label="返回顶部"></a>
@@ -74,7 +90,7 @@
       <section class="section itinerary-section" id="itinerary" aria-labelledby="itinerary-title" data-module="itinerary" hidden>
         <div class="section-heading"><div><p class="section-kicker">DAY BY DAY</p><h2 id="itinerary-title">每日行程</h2></div><span class="soft-label" id="day-count"></span></div>
         <div class="itinerary-tools">
-          <p>展开日期后可编辑 · 修改只保存在当前浏览器</p>
+          <p>行程修改同步给四位旅伴 · 由 Weiyang 编辑</p>
           <div>
             <button type="button" id="itinerary-export">导出备份</button>
             <button type="button" id="itinerary-import">导入备份</button>

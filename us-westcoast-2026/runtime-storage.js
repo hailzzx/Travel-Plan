@@ -217,11 +217,12 @@
     }
 
     async function request(method, changes) {
+      if (method !== "GET" && !globalThis.TravelProfile?.canEdit()) throw new Error("只有 Weiyang 可以编辑共享内容");
       const init = method === "GET"
         ? { cache: "no-store" }
         : {
             method,
-            headers: { "content-type": "application/json" },
+            headers: { "content-type": "application/json", "x-travel-actor": globalThis.TravelProfile.getActor() },
             body: JSON.stringify({ changes })
           };
       const response = await fetch(endpoint(), init);
