@@ -1,0 +1,2981 @@
+{
+  "$schema": "./schemas/trip-data.schema.json",
+  "schemaVersion": "2.0-lite",
+  "config": {
+    "schemaVersion": "1.0.0",
+    "modules": {
+      "flights": true,
+      "overview": true,
+      "itinerary": true,
+      "todo": true,
+      "driving": true,
+      "ledger": true
+    },
+    "language": "zh-CN",
+    "persistence": {
+      "mode": "local"
+    }
+  },
+  "metadata": {
+    "tripId": "usa-west-coast-2026-10",
+    "title": "美国西海岸八日旅行",
+    "language": "zh-CN",
+    "assets": {
+      "routeMaps": [
+        "assets/maps/templates/template-05-river-highland.webp"
+      ]
+    }
+  },
+  "trip": {
+    "status": "draft",
+    "startDate": "2026-10-02",
+    "endDate": "2026-10-09",
+    "dayCount": 8,
+    "nightCountAway": 7,
+    "countries": [
+      {
+        "code": "US",
+        "name": "United States",
+        "nameZh": "美国"
+      }
+    ],
+    "primaryDestinationCountries": [
+      "US"
+    ],
+    "citiesAndAreas": [
+      "洛杉矶",
+      "约书亚树",
+      "圣巴巴拉",
+      "大苏尔",
+      "蒙特雷",
+      "旧金山"
+    ],
+    "routeSummary": "洛杉矶 → 约书亚树 → 圣巴巴拉 → 大苏尔 → 蒙特雷 → 旧金山",
+    "groupSize": 4,
+    "primaryDestinationName": "美国西海岸"
+  },
+  "flightJourneys": [
+    {
+      "id": "outbound",
+      "title": "上海经香港飞往洛杉矶"
+    },
+    {
+      "id": "inbound",
+      "title": "旧金山经香港返回上海"
+    }
+  ],
+  "flights": [
+    {
+      "id": "cx303",
+      "journeyId": "outbound",
+      "sequence": 1,
+      "airline": {
+        "name": "Cathay Pacific",
+        "nameZh": "国泰航空"
+      },
+      "flightNumber": "CX303",
+      "departure": {
+        "airportCode": "PVG",
+        "city": "上海",
+        "date": "2026-10-02",
+        "time": "07:20",
+        "utcOffset": "+08:00",
+        "terminal": "T2"
+      },
+      "arrival": {
+        "airportCode": "HKG",
+        "city": "香港",
+        "date": "2026-10-02",
+        "time": "10:10",
+        "utcOffset": "+08:00",
+        "terminal": "T1"
+      }
+    },
+    {
+      "id": "cx884",
+      "journeyId": "outbound",
+      "sequence": 2,
+      "airline": {
+        "name": "Cathay Pacific",
+        "nameZh": "国泰航空"
+      },
+      "flightNumber": "CX884",
+      "departure": {
+        "airportCode": "HKG",
+        "city": "香港",
+        "date": "2026-10-02",
+        "time": "12:25",
+        "utcOffset": "+08:00",
+        "terminal": "T1"
+      },
+      "arrival": {
+        "airportCode": "LAX",
+        "city": "洛杉矶",
+        "date": "2026-10-02",
+        "time": "10:45",
+        "utcOffset": "-07:00",
+        "terminal": "B"
+      },
+      "connectionFromPrevious": {
+        "plannedDurationText": "香港中转 2小时15分"
+      }
+    },
+    {
+      "id": "cx879",
+      "journeyId": "inbound",
+      "sequence": 1,
+      "airline": {
+        "name": "Cathay Pacific",
+        "nameZh": "国泰航空"
+      },
+      "flightNumber": "CX879",
+      "departure": {
+        "airportCode": "SFO",
+        "city": "旧金山",
+        "date": "2026-10-09",
+        "time": "13:00",
+        "utcOffset": "-07:00",
+        "terminal": "I"
+      },
+      "arrival": {
+        "airportCode": "HKG",
+        "city": "香港",
+        "date": "2026-10-10",
+        "time": "18:55",
+        "utcOffset": "+08:00",
+        "terminal": "T1"
+      }
+    },
+    {
+      "id": "cx302",
+      "journeyId": "inbound",
+      "sequence": 2,
+      "airline": {
+        "name": "Cathay Pacific",
+        "nameZh": "国泰航空"
+      },
+      "flightNumber": "CX302",
+      "departure": {
+        "airportCode": "HKG",
+        "city": "香港",
+        "date": "2026-10-10",
+        "time": "21:05",
+        "utcOffset": "+08:00",
+        "terminal": "T1"
+      },
+      "arrival": {
+        "airportCode": "PVG",
+        "city": "上海",
+        "date": "2026-10-10",
+        "time": "23:55",
+        "utcOffset": "+08:00",
+        "terminal": "T2"
+      },
+      "connectionFromPrevious": {
+        "plannedDurationText": "香港中转 2小时10分"
+      }
+    }
+  ],
+  "accommodations": [
+    {
+      "id": "la-stay",
+      "name": "Stay Two - Beautiful Townhome Near Downtown LA",
+      "checkIn": "2026-10-02",
+      "checkOut": "2026-10-04",
+      "address": "1527 Abbot Avenue Unit B, San Gabriel, CA 91776, United States",
+      "phone": "+1 626-244-4662",
+      "confirmationCode": "HMQQTTEAPK",
+      "amountPaid": {
+        "currency": "CNY",
+        "amount": 5204.59
+      }
+    },
+    {
+      "id": "joshua-stay",
+      "name": "Spirit Wind | Architecture + Views + National Park",
+      "checkIn": "2026-10-04",
+      "checkOut": "2026-10-05",
+      "address": "61421 Navajo Trail, Joshua Tree, CA 92252, United States",
+      "phone": "+1 213-840-4481",
+      "confirmationCode": "HM3WKWMFPH",
+      "amountPaid": {
+        "currency": "CNY",
+        "amount": 2696.18
+      }
+    },
+    {
+      "id": "monterey-stay",
+      "name": "Ramada by Wyndham Monterey",
+      "checkIn": "2026-10-05",
+      "checkOut": "2026-10-06",
+      "address": "2058 N Fremont St, Monterey, CA",
+      "phone": "0018312041253",
+      "amountPaid": {
+        "currency": "CNY",
+        "amount": 1328.88
+      }
+    },
+    {
+      "id": "sf-stay",
+      "name": "Ocean & SF View | Modern 4B2B Home w/ Free Parking",
+      "checkIn": "2026-10-06",
+      "checkOut": "2026-10-09",
+      "address": "343 Frankfort Street, Daly City, CA 94014, United States",
+      "phone": "+1 650-609-1209",
+      "confirmationCode": "HMN4R35K9A",
+      "amountPaid": {
+        "currency": "CNY",
+        "amount": 9056.54
+      }
+    }
+  ],
+  "groundTransport": {
+    "rentalCar": {
+      "company": "Sixt",
+      "rentalPeriodDays": 6,
+      "vehicle": {
+        "example": "GMC Acadia 或同等级车型",
+        "class": "Standard SUV / SFAV"
+      },
+      "unlimitedKilometers": true,
+      "price": {
+        "currency": "USD",
+        "payAtCounter": 769.1,
+        "quotedCny": 5190.5,
+        "paymentStatus": "paid"
+      },
+      "insurance": [
+        "All Inclusive 保障",
+        "零免赔额"
+      ],
+      "pickup": {
+        "date": "2026-10-02",
+        "time": "12:00",
+        "location": "Los Angeles Int Airport",
+        "address": "5251 W 98th St, Los Angeles, CA 90045-5137",
+        "utcOffset": "-07:00"
+      },
+      "dropoff": {
+        "date": "2026-10-08",
+        "time": "12:00",
+        "timeZoneLabel": "美国太平洋夏令时",
+        "vehicleReturnPoint": "San Francisco Fishermans Wharf；655 Beach Street, Level G3, San Francisco, CA 94109-1342",
+        "deadlineWarning": "请于 12:00 前在渔人码头指定地点还车；该地点并非机场。",
+        "recommendedArrivalTime": "待确认",
+        "utcOffset": "-07:00",
+        "arrivalNote": "请于 12:00 前抵达旧金山渔人码头指定地点还车。"
+      },
+      "confirmationNumber": "9739673198"
+    },
+    "rentalChecklist": [],
+    "drivingNotes": [],
+    "drivingReferenceLinks": [],
+    "plannedRoadLegs": [],
+    "publicTransitAndRail": []
+  },
+  "days": [
+    {
+      "day": 1,
+      "date": "2026-10-02",
+      "title": "抵达洛杉矶",
+      "locations": [
+        "上海",
+        "香港",
+        "洛杉矶",
+        "圣盖博"
+      ],
+      "schedule": [
+        {
+          "id": "d1-1",
+          "time": "07:20",
+          "type": "flight",
+          "text": "CX303：上海浦东 T2 → 香港 T1，07:20–10:10"
+        },
+        {
+          "id": "d1-2",
+          "time": "12:25",
+          "type": "flight",
+          "text": "CX884：香港 T1 → 洛杉矶 TBIT，12:25–10:45（当地时间）"
+        },
+        {
+          "id": "d1-3",
+          "time": "12:00",
+          "type": "drive",
+          "text": "在洛杉矶国际机场取车；5251 W 98th St, Los Angeles, CA 90045-5137",
+          "placeId": "lax"
+        },
+        {
+          "id": "d1-4",
+          "time": "—",
+          "type": "restaurant",
+          "text": "In-N-Out Burger",
+          "placeId": "inout"
+        },
+        {
+          "id": "d1-5",
+          "time": "—",
+          "type": "attraction",
+          "text": "South Palm Drive",
+          "placeId": "south-palm"
+        },
+        {
+          "id": "d1-6",
+          "time": "—",
+          "type": "attraction",
+          "text": "比弗利山花园公园",
+          "placeId": "beverly-park"
+        },
+        {
+          "id": "d1-7",
+          "time": "—",
+          "type": "attraction",
+          "text": "圣莫尼卡",
+          "placeId": "santa-monica"
+        },
+        {
+          "id": "d1-8",
+          "time": "—",
+          "type": "attraction",
+          "text": "Playa del Rey",
+          "placeId": "playa-del-rey"
+        },
+        {
+          "id": "d1-9",
+          "time": "16:00",
+          "type": "check-in",
+          "text": "入住 Stay Two - Beautiful Townhome Near Downtown LA；1527 Abbot Avenue Unit B, San Gabriel, CA 91776",
+          "placeId": "san-gabriel"
+        }
+      ],
+      "costReferences": [
+        {
+          "item": "圣盖博住宿（2晚，已支付）",
+          "currency": "CNY",
+          "amount": 5204.59
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "date": "2026-10-03",
+      "title": "洛杉矶市区",
+      "locations": [
+        "圣盖博",
+        "洛杉矶"
+      ],
+      "schedule": [
+        {
+          "id": "d2-1",
+          "time": "—",
+          "type": "attraction",
+          "text": "盖蒂中心",
+          "placeId": "getty"
+        },
+        {
+          "id": "d2-2",
+          "time": "—",
+          "type": "attraction",
+          "text": "Melrose Avenue",
+          "placeId": "melrose"
+        },
+        {
+          "id": "d2-3",
+          "time": "—",
+          "type": "note",
+          "text": "CCD（具体地点待确认）"
+        },
+        {
+          "id": "d2-4",
+          "time": "—",
+          "type": "attraction",
+          "text": "好莱坞",
+          "placeId": "hollywood"
+        },
+        {
+          "id": "d2-5",
+          "time": "—",
+          "type": "attraction",
+          "text": "格里菲斯天文台",
+          "placeId": "griffith"
+        },
+        {
+          "id": "d2-6",
+          "time": "—",
+          "type": "return",
+          "text": "返回圣盖博住宿",
+          "placeId": "san-gabriel"
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "date": "2026-10-04",
+      "title": "洛杉矶至约书亚树",
+      "locations": [
+        "圣盖博",
+        "Desert Hills",
+        "约书亚树"
+      ],
+      "schedule": [
+        {
+          "id": "d3-1",
+          "time": "10:00",
+          "type": "check-out",
+          "text": "从圣盖博住宿退房；退房时间 10:00",
+          "placeId": "san-gabriel"
+        },
+        {
+          "id": "d3-2",
+          "time": "—",
+          "type": "attraction",
+          "text": "Desert Hills Premium Outlets",
+          "placeId": "desert-hills"
+        },
+        {
+          "id": "d3-3",
+          "time": "—",
+          "type": "attraction",
+          "text": "约书亚树国家公园",
+          "placeId": "joshua-tree"
+        },
+        {
+          "id": "d3-4",
+          "time": "—",
+          "type": "attraction",
+          "text": "骷髅岩",
+          "placeId": "skull-rock"
+        },
+        {
+          "id": "d3-5",
+          "time": "—",
+          "type": "attraction",
+          "text": "Cholla Cactus Garden",
+          "placeId": "cholla"
+        },
+        {
+          "id": "d3-6",
+          "time": "16:00",
+          "type": "check-in",
+          "text": "入住 Spirit Wind | Architecture + Views + National Park；61421 Navajo Trail, Joshua Tree, CA 92252",
+          "placeId": "joshua-stay"
+        }
+      ],
+      "costReferences": [
+        {
+          "item": "约书亚树住宿（1晚，已支付）",
+          "currency": "CNY",
+          "amount": 2696.18
+        }
+      ]
+    },
+    {
+      "day": 4,
+      "date": "2026-10-05",
+      "title": "约书亚树至蒙特雷",
+      "locations": [
+        "约书亚树",
+        "圣巴巴拉",
+        "大苏尔",
+        "蒙特雷"
+      ],
+      "schedule": [
+        {
+          "id": "d4-1",
+          "time": "11:00",
+          "type": "check-out",
+          "text": "从约书亚树住宿退房；退房时间 11:00",
+          "placeId": "joshua-stay"
+        },
+        {
+          "id": "d4-2",
+          "time": "—",
+          "type": "attraction",
+          "text": "圣巴巴拉",
+          "placeId": "santa-barbara"
+        },
+        {
+          "id": "d4-3",
+          "time": "—",
+          "type": "attraction",
+          "text": "大苏尔",
+          "placeId": "big-sur"
+        },
+        {
+          "id": "d4-4",
+          "time": "—",
+          "type": "drive",
+          "text": "抵达蒙特雷",
+          "placeId": "monterey"
+        },
+        {
+          "id": "d4-5",
+          "time": "15:00",
+          "type": "check-in",
+          "text": "入住 Ramada by Wyndham Monterey；2058 N Fremont St，办理入住 15:00–23:00",
+          "placeId": "monterey"
+        }
+      ],
+      "costReferences": [
+        {
+          "item": "蒙特雷酒店（1晚，已预付）",
+          "currency": "CNY",
+          "amount": 1328.88
+        }
+      ]
+    },
+    {
+      "day": 5,
+      "date": "2026-10-06",
+      "title": "蒙特雷与斯坦福",
+      "locations": [
+        "蒙特雷",
+        "斯坦福",
+        "戴利城"
+      ],
+      "schedule": [
+        {
+          "id": "d5-1",
+          "time": "11:00",
+          "type": "check-out",
+          "text": "从 Ramada by Wyndham Monterey 退房；11:00 前",
+          "placeId": "monterey"
+        },
+        {
+          "id": "d5-2",
+          "time": "—",
+          "type": "attraction",
+          "text": "蒙特雷观鲸（活动及票务待确认）",
+          "placeId": "monterey"
+        },
+        {
+          "id": "d5-3",
+          "time": "—",
+          "type": "attraction",
+          "text": "斯坦福大学",
+          "placeId": "stanford"
+        },
+        {
+          "id": "d5-4",
+          "time": "15:00",
+          "type": "check-in",
+          "text": "入住 Ocean & SF View | Modern 4B2B Home w/ Free Parking；343 Frankfort Street, Daly City, CA 94014",
+          "placeId": "daly-city"
+        }
+      ],
+      "costReferences": [
+        {
+          "item": "戴利城住宿（3晚，已支付）",
+          "currency": "CNY",
+          "amount": 9056.54
+        }
+      ]
+    },
+    {
+      "day": 6,
+      "date": "2026-10-07",
+      "title": "旧金山湾区",
+      "locations": [
+        "戴利城",
+        "旧金山",
+        "半月湾"
+      ],
+      "schedule": [
+        {
+          "id": "d6-1",
+          "time": "—",
+          "type": "attraction",
+          "text": "Warming Hut Park Store",
+          "placeId": "warming-hut"
+        },
+        {
+          "id": "d6-2",
+          "time": "—",
+          "type": "attraction",
+          "text": "金门大桥",
+          "placeId": "golden-gate"
+        },
+        {
+          "id": "d6-3",
+          "time": "—",
+          "type": "hike",
+          "text": "Lands End Trail",
+          "placeId": "lands-end"
+        },
+        {
+          "id": "d6-4",
+          "time": "—",
+          "type": "attraction",
+          "text": "半月湾",
+          "placeId": "half-moon-bay"
+        },
+        {
+          "id": "d6-5",
+          "time": "—",
+          "type": "return",
+          "text": "返回戴利城住宿",
+          "placeId": "daly-city"
+        }
+      ]
+    },
+    {
+      "day": 7,
+      "date": "2026-10-08",
+      "title": "旧金山市区",
+      "locations": [
+        "戴利城",
+        "旧金山"
+      ],
+      "schedule": [
+        {
+          "id": "d7-1",
+          "time": "—",
+          "type": "attraction",
+          "text": "Haight-Ashbury",
+          "placeId": "haight"
+        },
+        {
+          "id": "d7-2",
+          "time": "—",
+          "type": "attraction",
+          "text": "Powell Street",
+          "placeId": "powell"
+        },
+        {
+          "id": "d7-3",
+          "time": "—",
+          "type": "attraction",
+          "text": "California Street",
+          "placeId": "california"
+        },
+        {
+          "id": "d7-4",
+          "time": "—",
+          "type": "attraction",
+          "text": "Lombard Street",
+          "placeId": "lombard"
+        },
+        {
+          "id": "d7-5",
+          "time": "—",
+          "type": "attraction",
+          "text": "Hyde Street",
+          "placeId": "hyde"
+        },
+        {
+          "id": "d7-6",
+          "time": "—",
+          "type": "attraction",
+          "text": "唐人街",
+          "placeId": "chinatown"
+        },
+        {
+          "id": "d7-7",
+          "time": "—",
+          "type": "attraction",
+          "text": "39号码头",
+          "placeId": "pier-39"
+        },
+        {
+          "id": "d7-8",
+          "time": "—",
+          "type": "attraction",
+          "text": "渔人码头",
+          "placeId": "fishermans"
+        },
+        {
+          "id": "d7-9",
+          "time": "12:00",
+          "type": "drive",
+          "text": "在旧金山渔人码头还车；655 Beach Street, Level G3, San Francisco, CA 94109-1342",
+          "placeId": "fishermans"
+        },
+        {
+          "id": "d7-10",
+          "time": "—",
+          "type": "return",
+          "text": "返回戴利城住宿",
+          "placeId": "daly-city"
+        }
+      ],
+      "notes": [
+        "租车约定 12:00 在渔人码头还车；当日景点未提供具体时间，请据此安排顺序。"
+      ]
+    },
+    {
+      "day": 8,
+      "date": "2026-10-09",
+      "title": "返程出发",
+      "locations": [
+        "戴利城",
+        "旧金山机场",
+        "香港"
+      ],
+      "schedule": [
+        {
+          "id": "d8-1",
+          "time": "11:00",
+          "type": "check-out",
+          "text": "从戴利城住宿退房；退房时间 11:00",
+          "placeId": "daly-city"
+        },
+        {
+          "id": "d8-2",
+          "time": "—",
+          "type": "transfer",
+          "text": "前往旧金山国际机场",
+          "placeId": "sfo"
+        },
+        {
+          "id": "d8-3",
+          "time": "13:00",
+          "type": "flight",
+          "text": "CX879：旧金山 I 航站楼 → 香港 T1，13:00–次日 18:55"
+        },
+        {
+          "id": "d8-4",
+          "time": "21:05",
+          "type": "flight",
+          "text": "10 月 10 日转乘 CX302：香港 T1 → 上海浦东 T2，21:05–23:55"
+        }
+      ],
+      "notes": [
+        "回程在香港中转；抵达上海日期为 10 月 10 日。"
+      ]
+    }
+  ],
+  "places": [
+    {
+      "id": "lax",
+      "name": "Los Angeles International Airport",
+      "nameZh": "洛杉矶国际机场",
+      "countryCode": "US",
+      "googleMapsQuery": "Los Angeles International Airport, California, USA"
+    },
+    {
+      "id": "inout",
+      "name": "In-N-Out Burger",
+      "nameZh": "In-N-Out Burger",
+      "countryCode": "US",
+      "googleMapsQuery": "In-N-Out Burger, California, USA"
+    },
+    {
+      "id": "south-palm",
+      "name": "South Palm Drive",
+      "nameZh": "South Palm Drive",
+      "countryCode": "US",
+      "googleMapsQuery": "South Palm Drive, California, USA"
+    },
+    {
+      "id": "beverly-park",
+      "name": "Beverly Hills Garden Park",
+      "nameZh": "比弗利山花园公园",
+      "countryCode": "US",
+      "googleMapsQuery": "Beverly Hills Garden Park, California, USA"
+    },
+    {
+      "id": "santa-monica",
+      "name": "Santa Monica",
+      "nameZh": "圣莫尼卡",
+      "countryCode": "US",
+      "googleMapsQuery": "Santa Monica, California, USA"
+    },
+    {
+      "id": "playa-del-rey",
+      "name": "Playa del Rey",
+      "nameZh": "Playa del Rey",
+      "countryCode": "US",
+      "googleMapsQuery": "Playa del Rey, California, USA"
+    },
+    {
+      "id": "san-gabriel",
+      "name": "San Gabriel",
+      "nameZh": "圣盖博",
+      "countryCode": "US",
+      "googleMapsQuery": "San Gabriel, California, USA"
+    },
+    {
+      "id": "getty",
+      "name": "The Getty",
+      "nameZh": "盖蒂中心",
+      "countryCode": "US",
+      "googleMapsQuery": "The Getty, California, USA"
+    },
+    {
+      "id": "melrose",
+      "name": "Melrose Avenue",
+      "nameZh": "Melrose Avenue",
+      "countryCode": "US",
+      "googleMapsQuery": "Melrose Avenue, California, USA"
+    },
+    {
+      "id": "hollywood",
+      "name": "Hollywood",
+      "nameZh": "好莱坞",
+      "countryCode": "US",
+      "googleMapsQuery": "Hollywood, California, USA"
+    },
+    {
+      "id": "griffith",
+      "name": "Griffith Observatory",
+      "nameZh": "格里菲斯天文台",
+      "countryCode": "US",
+      "googleMapsQuery": "Griffith Observatory, California, USA"
+    },
+    {
+      "id": "desert-hills",
+      "name": "Desert Hills Premium Outlets",
+      "nameZh": "Desert Hills Premium Outlets",
+      "countryCode": "US",
+      "googleMapsQuery": "Desert Hills Premium Outlets, California, USA"
+    },
+    {
+      "id": "joshua-tree",
+      "name": "Joshua Tree National Park",
+      "nameZh": "约书亚树国家公园",
+      "countryCode": "US",
+      "googleMapsQuery": "Joshua Tree National Park, California, USA"
+    },
+    {
+      "id": "skull-rock",
+      "name": "Skull Rock",
+      "nameZh": "骷髅岩",
+      "countryCode": "US",
+      "googleMapsQuery": "Skull Rock, California, USA"
+    },
+    {
+      "id": "cholla",
+      "name": "Cholla Cactus Garden",
+      "nameZh": "仙人掌花园",
+      "countryCode": "US",
+      "googleMapsQuery": "Cholla Cactus Garden, California, USA"
+    },
+    {
+      "id": "joshua-stay",
+      "name": "Joshua Tree",
+      "nameZh": "约书亚树",
+      "countryCode": "US",
+      "googleMapsQuery": "Joshua Tree, California, USA"
+    },
+    {
+      "id": "santa-barbara",
+      "name": "Santa Barbara",
+      "nameZh": "圣巴巴拉",
+      "countryCode": "US",
+      "googleMapsQuery": "Santa Barbara, California, USA"
+    },
+    {
+      "id": "big-sur",
+      "name": "Big Sur",
+      "nameZh": "大苏尔",
+      "countryCode": "US",
+      "googleMapsQuery": "Big Sur, California, USA"
+    },
+    {
+      "id": "monterey",
+      "name": "Monterey",
+      "nameZh": "蒙特雷",
+      "countryCode": "US",
+      "googleMapsQuery": "Monterey, California, USA"
+    },
+    {
+      "id": "stanford",
+      "name": "Stanford University",
+      "nameZh": "斯坦福大学",
+      "countryCode": "US",
+      "googleMapsQuery": "Stanford University, California, USA"
+    },
+    {
+      "id": "daly-city",
+      "name": "Daly City",
+      "nameZh": "戴利城",
+      "countryCode": "US",
+      "googleMapsQuery": "Daly City, California, USA"
+    },
+    {
+      "id": "warming-hut",
+      "name": "Warming Hut Park Store",
+      "nameZh": "Warming Hut Park Store",
+      "countryCode": "US",
+      "googleMapsQuery": "Warming Hut Park Store, California, USA"
+    },
+    {
+      "id": "golden-gate",
+      "name": "Golden Gate Bridge",
+      "nameZh": "金门大桥",
+      "countryCode": "US",
+      "googleMapsQuery": "Golden Gate Bridge, California, USA"
+    },
+    {
+      "id": "lands-end",
+      "name": "Lands End Trail",
+      "nameZh": "Lands End Trail",
+      "countryCode": "US",
+      "googleMapsQuery": "Lands End Trail, California, USA"
+    },
+    {
+      "id": "half-moon-bay",
+      "name": "Half Moon Bay",
+      "nameZh": "半月湾",
+      "countryCode": "US",
+      "googleMapsQuery": "Half Moon Bay, California, USA"
+    },
+    {
+      "id": "haight",
+      "name": "Haight-Ashbury",
+      "nameZh": "Haight-Ashbury",
+      "countryCode": "US",
+      "googleMapsQuery": "Haight-Ashbury, California, USA"
+    },
+    {
+      "id": "powell",
+      "name": "Powell Street",
+      "nameZh": "Powell Street",
+      "countryCode": "US",
+      "googleMapsQuery": "Powell Street, California, USA"
+    },
+    {
+      "id": "california",
+      "name": "California Street",
+      "nameZh": "California Street",
+      "countryCode": "US",
+      "googleMapsQuery": "California Street, California, USA"
+    },
+    {
+      "id": "lombard",
+      "name": "Lombard Street",
+      "nameZh": "九曲花街",
+      "countryCode": "US",
+      "googleMapsQuery": "Lombard Street, California, USA"
+    },
+    {
+      "id": "hyde",
+      "name": "Hyde Street",
+      "nameZh": "Hyde Street",
+      "countryCode": "US",
+      "googleMapsQuery": "Hyde Street, California, USA"
+    },
+    {
+      "id": "chinatown",
+      "name": "Chinatown",
+      "nameZh": "唐人街",
+      "countryCode": "US",
+      "googleMapsQuery": "Chinatown, California, USA"
+    },
+    {
+      "id": "pier-39",
+      "name": "Pier 39",
+      "nameZh": "39号码头",
+      "countryCode": "US",
+      "googleMapsQuery": "Pier 39, California, USA"
+    },
+    {
+      "id": "fishermans",
+      "name": "Fisherman’s Wharf",
+      "nameZh": "渔人码头",
+      "countryCode": "US",
+      "googleMapsQuery": "Fisherman’s Wharf, California, USA"
+    },
+    {
+      "id": "sfo",
+      "name": "San Francisco International Airport",
+      "nameZh": "旧金山国际机场",
+      "countryCode": "US",
+      "googleMapsQuery": "San Francisco International Airport, California, USA"
+    }
+  ],
+  "restaurants": [],
+  "bookingsAndTickets": [],
+  "ticketPlanning": {
+    "statusStorage": "local",
+    "statusStorageNote": "门票状态默认只保存在当前浏览器。",
+    "items": []
+  },
+  "preTrip": {
+    "packingItems": [
+      {
+        "id": "verify-license",
+        "text": "在线验证租车所需驾照（租车页面提示）",
+        "completed": false
+      }
+    ],
+    "preparationsExplicitlyMentioned": [
+      "在线验证租车所需驾照"
+    ],
+    "missingNote": ""
+  },
+  "mapLinks": {
+    "providedGoogleMapsLinks": [],
+    "note": "",
+    "cityLevelNavigationDisabled": false,
+    "navigationPolicy": {
+      "noNavigationTypes": [
+        "flight",
+        "note",
+        "rest"
+      ],
+      "selfNavigationTypes": [
+        "drive",
+        "return",
+        "transfer",
+        "check-in",
+        "check-out",
+        "restaurant",
+        "attraction",
+        "walk",
+        "hike"
+      ]
+    },
+    "navigationPlaces": []
+  },
+  "issuesAndUncertainties": [
+    {
+      "id": "ccd",
+      "text": "第 2 天 CCD 的具体地点待确认。"
+    },
+    {
+      "id": "whale-watch",
+      "text": "第 5 天蒙特雷观鲸出现在日程标题中，具体预订、时间和票务待确认。"
+    },
+    {
+      "id": "ledger-payers",
+      "text": "已确认四人平均分摊，现有机票和住宿费用的实际付款人尚未提供；未自动生成账单。"
+    }
+  ],
+  "map": {
+    "schemaVersion": "1.0-lite",
+    "mapMode": "template-auto",
+    "templateId": "auto",
+    "disclaimer": "本图仅表达地点的相对方位与路线顺序，不代表真实比例或精确地理边界。",
+    "places": [
+      {
+        "id": "lax",
+        "name": "Los Angeles International Airport",
+        "nameZh": "洛杉矶国际机场",
+        "countryCode": "US",
+        "geo": {
+          "lat": 33.9425,
+          "lng": -118.4081
+        }
+      },
+      {
+        "id": "inout",
+        "name": "In-N-Out Burger",
+        "nameZh": "In-N-Out Burger",
+        "countryCode": "US",
+        "geo": {
+          "lat": 33.95,
+          "lng": -118.39
+        }
+      },
+      {
+        "id": "south-palm",
+        "name": "South Palm Drive",
+        "nameZh": "South Palm Drive",
+        "countryCode": "US",
+        "geo": {
+          "lat": 34.065,
+          "lng": -118.39
+        }
+      },
+      {
+        "id": "beverly-park",
+        "name": "Beverly Hills Garden Park",
+        "nameZh": "比弗利山花园公园",
+        "countryCode": "US",
+        "geo": {
+          "lat": 34.0737,
+          "lng": -118.399
+        }
+      },
+      {
+        "id": "santa-monica",
+        "name": "Santa Monica",
+        "nameZh": "圣莫尼卡",
+        "countryCode": "US",
+        "geo": {
+          "lat": 34.0195,
+          "lng": -118.4912
+        }
+      },
+      {
+        "id": "playa-del-rey",
+        "name": "Playa del Rey",
+        "nameZh": "Playa del Rey",
+        "countryCode": "US",
+        "geo": {
+          "lat": 33.96,
+          "lng": -118.448
+        }
+      },
+      {
+        "id": "san-gabriel",
+        "name": "San Gabriel",
+        "nameZh": "圣盖博",
+        "countryCode": "US",
+        "geo": {
+          "lat": 34.0961,
+          "lng": -118.1058
+        }
+      },
+      {
+        "id": "getty",
+        "name": "The Getty",
+        "nameZh": "盖蒂中心",
+        "countryCode": "US",
+        "geo": {
+          "lat": 34.078,
+          "lng": -118.474
+        }
+      },
+      {
+        "id": "melrose",
+        "name": "Melrose Avenue",
+        "nameZh": "Melrose Avenue",
+        "countryCode": "US",
+        "geo": {
+          "lat": 34.083,
+          "lng": -118.353
+        }
+      },
+      {
+        "id": "hollywood",
+        "name": "Hollywood",
+        "nameZh": "好莱坞",
+        "countryCode": "US",
+        "geo": {
+          "lat": 34.1016,
+          "lng": -118.3269
+        }
+      },
+      {
+        "id": "griffith",
+        "name": "Griffith Observatory",
+        "nameZh": "格里菲斯天文台",
+        "countryCode": "US",
+        "geo": {
+          "lat": 34.1184,
+          "lng": -118.3004
+        }
+      },
+      {
+        "id": "desert-hills",
+        "name": "Desert Hills Premium Outlets",
+        "nameZh": "Desert Hills Premium Outlets",
+        "countryCode": "US",
+        "geo": {
+          "lat": 33.929,
+          "lng": -116.816
+        }
+      },
+      {
+        "id": "joshua-tree",
+        "name": "Joshua Tree National Park",
+        "nameZh": "约书亚树国家公园",
+        "countryCode": "US",
+        "geo": {
+          "lat": 33.8734,
+          "lng": -115.901
+        }
+      },
+      {
+        "id": "skull-rock",
+        "name": "Skull Rock",
+        "nameZh": "骷髅岩",
+        "countryCode": "US",
+        "geo": {
+          "lat": 33.9998,
+          "lng": -116.059
+        }
+      },
+      {
+        "id": "cholla",
+        "name": "Cholla Cactus Garden",
+        "nameZh": "仙人掌花园",
+        "countryCode": "US",
+        "geo": {
+          "lat": 33.925,
+          "lng": -115.929
+        }
+      },
+      {
+        "id": "joshua-stay",
+        "name": "Joshua Tree",
+        "nameZh": "约书亚树",
+        "countryCode": "US",
+        "geo": {
+          "lat": 34.1347,
+          "lng": -116.3131
+        }
+      },
+      {
+        "id": "santa-barbara",
+        "name": "Santa Barbara",
+        "nameZh": "圣巴巴拉",
+        "countryCode": "US",
+        "geo": {
+          "lat": 34.4208,
+          "lng": -119.6982
+        }
+      },
+      {
+        "id": "big-sur",
+        "name": "Big Sur",
+        "nameZh": "大苏尔",
+        "countryCode": "US",
+        "geo": {
+          "lat": 36.2704,
+          "lng": -121.8081
+        }
+      },
+      {
+        "id": "monterey",
+        "name": "Monterey",
+        "nameZh": "蒙特雷",
+        "countryCode": "US",
+        "geo": {
+          "lat": 36.6002,
+          "lng": -121.8947
+        }
+      },
+      {
+        "id": "stanford",
+        "name": "Stanford University",
+        "nameZh": "斯坦福大学",
+        "countryCode": "US",
+        "geo": {
+          "lat": 37.4275,
+          "lng": -122.1697
+        }
+      },
+      {
+        "id": "daly-city",
+        "name": "Daly City",
+        "nameZh": "戴利城",
+        "countryCode": "US",
+        "geo": {
+          "lat": 37.6879,
+          "lng": -122.4702
+        }
+      },
+      {
+        "id": "warming-hut",
+        "name": "Warming Hut Park Store",
+        "nameZh": "Warming Hut Park Store",
+        "countryCode": "US",
+        "geo": {
+          "lat": 37.8108,
+          "lng": -122.477
+        }
+      },
+      {
+        "id": "golden-gate",
+        "name": "Golden Gate Bridge",
+        "nameZh": "金门大桥",
+        "countryCode": "US",
+        "geo": {
+          "lat": 37.8199,
+          "lng": -122.4783
+        }
+      },
+      {
+        "id": "lands-end",
+        "name": "Lands End Trail",
+        "nameZh": "Lands End Trail",
+        "countryCode": "US",
+        "geo": {
+          "lat": 37.781,
+          "lng": -122.504
+        }
+      },
+      {
+        "id": "half-moon-bay",
+        "name": "Half Moon Bay",
+        "nameZh": "半月湾",
+        "countryCode": "US",
+        "geo": {
+          "lat": 37.4636,
+          "lng": -122.4286
+        }
+      },
+      {
+        "id": "haight",
+        "name": "Haight-Ashbury",
+        "nameZh": "Haight-Ashbury",
+        "countryCode": "US",
+        "geo": {
+          "lat": 37.7694,
+          "lng": -122.4469
+        }
+      },
+      {
+        "id": "powell",
+        "name": "Powell Street",
+        "nameZh": "Powell Street",
+        "countryCode": "US",
+        "geo": {
+          "lat": 37.7865,
+          "lng": -122.408
+        }
+      },
+      {
+        "id": "california",
+        "name": "California Street",
+        "nameZh": "California Street",
+        "countryCode": "US",
+        "geo": {
+          "lat": 37.792,
+          "lng": -122.408
+        }
+      },
+      {
+        "id": "lombard",
+        "name": "Lombard Street",
+        "nameZh": "九曲花街",
+        "countryCode": "US",
+        "geo": {
+          "lat": 37.8021,
+          "lng": -122.4187
+        }
+      },
+      {
+        "id": "hyde",
+        "name": "Hyde Street",
+        "nameZh": "Hyde Street",
+        "countryCode": "US",
+        "geo": {
+          "lat": 37.799,
+          "lng": -122.419
+        }
+      },
+      {
+        "id": "chinatown",
+        "name": "Chinatown",
+        "nameZh": "唐人街",
+        "countryCode": "US",
+        "geo": {
+          "lat": 37.7941,
+          "lng": -122.4078
+        }
+      },
+      {
+        "id": "pier-39",
+        "name": "Pier 39",
+        "nameZh": "39号码头",
+        "countryCode": "US",
+        "geo": {
+          "lat": 37.8087,
+          "lng": -122.4098
+        }
+      },
+      {
+        "id": "fishermans",
+        "name": "Fisherman’s Wharf",
+        "nameZh": "渔人码头",
+        "countryCode": "US",
+        "geo": {
+          "lat": 37.808,
+          "lng": -122.418
+        }
+      },
+      {
+        "id": "sfo",
+        "name": "San Francisco International Airport",
+        "nameZh": "旧金山国际机场",
+        "countryCode": "US",
+        "geo": {
+          "lat": 37.6213,
+          "lng": -122.379
+        }
+      }
+    ],
+    "routes": [
+      {
+        "day": 1,
+        "placeIds": [
+          "lax",
+          "beverly-park",
+          "santa-monica",
+          "san-gabriel"
+        ]
+      },
+      {
+        "day": 2,
+        "placeIds": [
+          "san-gabriel",
+          "getty",
+          "hollywood",
+          "griffith",
+          "san-gabriel"
+        ]
+      },
+      {
+        "day": 3,
+        "placeIds": [
+          "san-gabriel",
+          "desert-hills",
+          "joshua-tree",
+          "joshua-stay"
+        ]
+      },
+      {
+        "day": 4,
+        "placeIds": [
+          "joshua-stay",
+          "santa-barbara",
+          "big-sur",
+          "monterey"
+        ]
+      },
+      {
+        "day": 5,
+        "placeIds": [
+          "monterey",
+          "stanford",
+          "daly-city"
+        ]
+      },
+      {
+        "day": 6,
+        "placeIds": [
+          "daly-city",
+          "golden-gate",
+          "lands-end",
+          "half-moon-bay",
+          "daly-city"
+        ]
+      },
+      {
+        "day": 7,
+        "placeIds": [
+          "daly-city",
+          "haight",
+          "chinatown",
+          "fishermans",
+          "daly-city"
+        ]
+      },
+      {
+        "day": 8,
+        "placeIds": [
+          "daly-city",
+          "sfo"
+        ]
+      }
+    ],
+    "dailyRoutes": [
+      {
+        "day": 1,
+        "placeIds": [
+          "lax",
+          "inout",
+          "south-palm",
+          "beverly-park",
+          "santa-monica",
+          "playa-del-rey",
+          "san-gabriel"
+        ]
+      },
+      {
+        "day": 2,
+        "placeIds": [
+          "san-gabriel",
+          "getty",
+          "melrose",
+          "hollywood",
+          "griffith",
+          "san-gabriel"
+        ]
+      },
+      {
+        "day": 3,
+        "placeIds": [
+          "san-gabriel",
+          "desert-hills",
+          "joshua-tree",
+          "skull-rock",
+          "cholla",
+          "joshua-stay"
+        ]
+      },
+      {
+        "day": 4,
+        "placeIds": [
+          "joshua-stay",
+          "santa-barbara",
+          "big-sur",
+          "monterey"
+        ]
+      },
+      {
+        "day": 5,
+        "placeIds": [
+          "monterey",
+          "stanford",
+          "daly-city"
+        ]
+      },
+      {
+        "day": 6,
+        "placeIds": [
+          "daly-city",
+          "warming-hut",
+          "golden-gate",
+          "lands-end",
+          "half-moon-bay",
+          "daly-city"
+        ]
+      },
+      {
+        "day": 7,
+        "placeIds": [
+          "daly-city",
+          "haight",
+          "powell",
+          "california",
+          "lombard",
+          "hyde",
+          "chinatown",
+          "pier-39",
+          "fishermans",
+          "daly-city"
+        ]
+      },
+      {
+        "day": 8,
+        "placeIds": [
+          "daly-city",
+          "sfo"
+        ]
+      }
+    ],
+    "region": {
+      "id": "us-west-coast",
+      "label": "美国西海岸",
+      "countryCode": "US",
+      "title": "美国西海岸 · 八日路线",
+      "heading": "US WEST COAST / 美国西海岸"
+    }
+  },
+  "routeMap": {
+    "defaultRegionId": "us-west-coast",
+    "regions": [
+      {
+        "id": "us-west-coast",
+        "label": "美国西海岸",
+        "countryCode": "US",
+        "scope": "template-schematic",
+        "mapMode": "frozen-template",
+        "templateId": "river-highland",
+        "mapModeReason": "separated-clusters-or-long-jump",
+        "mapModeMetrics": {
+          "placeCount": 34,
+          "geoPlaceCount": 34,
+          "widthKm": 594.36,
+          "heightKm": 438.06,
+          "spanKm": 737.25,
+          "averageNearestKm": 12.54,
+          "components": 1,
+          "largestLegKm": 312.64,
+          "jumpRatio": 12.4
+        },
+        "days": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "canvas": {
+          "width": 1448,
+          "height": 1086
+        },
+        "projection": {
+          "type": "relative-schematic",
+          "bounds": null
+        },
+        "baseImage": "assets/maps/templates/template-05-river-highland.webp",
+        "title": "美国西海岸 · 八日路线",
+        "ariaLabel": "美国西海岸模板化旅行路线示意图，共8天",
+        "disclaimer": "本图仅表达地点的相对方位与路线顺序，不代表真实比例或精确地理边界。",
+        "heading": {
+          "text": "US WEST COAST / 美国西海岸",
+          "x": 33,
+          "y": 105,
+          "size": 40
+        },
+        "legend": {
+          "x": 35,
+          "y": 168,
+          "gap": 43
+        },
+        "annotations": [],
+        "routes": [
+          {
+            "day": 1,
+            "color": "#397dc1",
+            "placeIds": [
+              "lax",
+              "beverly-park",
+              "santa-monica",
+              "san-gabriel"
+            ],
+            "paths": [
+              "M898.58 805.69 C937.0 796.9 974.7 799.3 1009.56 812.62 C971.1 779.0 926.7 758.5 878.76 752.27 C922.4 723.8 970.3 709.3 1019.55 709.84"
+            ],
+            "overviewPaths": [
+              "M898.58 805.69 C930.1 761.0 971.3 728.4 1019.55 709.84"
+            ]
+          },
+          {
+            "day": 2,
+            "color": "#e77e22",
+            "placeIds": [
+              "san-gabriel",
+              "getty",
+              "hollywood",
+              "griffith",
+              "san-gabriel"
+            ],
+            "paths": [
+              "M1019.55 709.84 C983.2 718.8 952.1 736.8 928.14 762.94 C917.6 745.7 912.5 727.0 913.26 707.97 C930.5 717.1 948.8 720.9 967.2 719.06 C984.1 710.7 1001.9 707.6 1019.55 709.84"
+            ],
+            "overviewPaths": [
+              "M1019.55 709.84 C983.6 698.6 947.5 697.9 913.26 707.97 C949.6 698.0 985.7 698.6 1019.55 709.84"
+            ]
+          },
+          {
+            "day": 3,
+            "color": "#618344",
+            "placeIds": [
+              "san-gabriel",
+              "desert-hills",
+              "joshua-tree",
+              "joshua-stay"
+            ],
+            "paths": [
+              "M1019.55 709.84 C1055.5 720.5 1085.6 740.0 1108.31 767.22 C1139.6 790.2 1174.7 802.9 1211.37 804.55 C1192.3 797.8 1176.6 786.5 1165.2 771.22"
+            ],
+            "overviewPaths": [
+              "M1019.55 709.84 C1094.2 722.9 1159.5 755.1 1211.37 804.55 C1199.0 788.6 1183.3 777.3 1165.2 771.22"
+            ]
+          },
+          {
+            "day": 4,
+            "color": "#209aaa",
+            "placeIds": [
+              "joshua-stay",
+              "santa-barbara",
+              "big-sur",
+              "monterey"
+            ],
+            "paths": [
+              "M1165.2 771.22 C1054.9 719.6 939.0 697.5 824.32 706.2 C732.9 654.9 662.6 582.9 617.64 494.53 C617.4 474.7 611.8 456.6 601.22 441.14"
+            ],
+            "overviewPaths": [
+              "M1165.2 771.22 C992.6 650.4 806.4 556.3 617.64 494.53 C606.7 478.0 601.1 459.9 601.22 441.14"
+            ]
+          },
+          {
+            "day": 5,
+            "color": "#8865a5",
+            "placeIds": [
+              "monterey",
+              "stanford",
+              "daly-city"
+            ],
+            "paths": [
+              "M601.22 441.14 C593.8 422.6 591.9 403.6 595.82 385.08 C564.8 375.2 533.6 374.4 504 382.89"
+            ],
+            "overviewPaths": [
+              "M601.22 441.14 C562.3 431.1 529.3 411.3 504 382.89"
+            ]
+          },
+          {
+            "day": 6,
+            "color": "#df6185",
+            "placeIds": [
+              "daly-city",
+              "golden-gate",
+              "lands-end",
+              "half-moon-bay",
+              "daly-city"
+            ],
+            "paths": [
+              "M504 382.89 C514.5 347.2 514.5 311.5 504 277.85 C510.4 246.8 524.7 220.0 546 199 C561.9 261.3 593.5 314.3 638.74 354.99 C595.7 377.9 549.9 387.4 504 382.89"
+            ],
+            "overviewPaths": []
+          },
+          {
+            "day": 7,
+            "color": "#397dc1",
+            "placeIds": [
+              "daly-city",
+              "haight",
+              "chinatown",
+              "fishermans",
+              "daly-city"
+            ],
+            "paths": [
+              "M504 382.89 C488.7 331.0 488.7 279.1 504 230.32 C543.5 268.1 590.1 292.2 641.01 301.19 C622.1 296.8 605.9 287.7 593.36 274.32 C552.1 302.3 521.7 339.2 504 382.89"
+            ],
+            "overviewPaths": [
+              "M504 382.89 C542.4 341.4 589.0 313.6 641.01 301.19 C586.3 315.3 539.7 343.0 504 382.89"
+            ]
+          },
+          {
+            "day": 8,
+            "color": "#e77e22",
+            "placeIds": [
+              "daly-city",
+              "sfo"
+            ],
+            "paths": [
+              "M504 382.89 C526.5 360.7 541.1 334.1 547.13 304.81"
+            ],
+            "overviewPaths": [
+              "M504 382.89 C526.5 360.7 541.1 334.1 547.13 304.81"
+            ]
+          }
+        ],
+        "places": [
+          {
+            "id": "lax",
+            "x": 898.58,
+            "y": 805.69,
+            "color": "#397dc1",
+            "tx": 866.58,
+            "ty": 855.69,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Los Angeles International Airport /",
+              "洛杉矶国际机场"
+            ],
+            "query": "Los Angeles International Airport 美国西海岸",
+            "geo": {
+              "lat": 33.9425,
+              "lng": -118.4081
+            },
+            "days": [
+              1
+            ]
+          },
+          {
+            "id": "inout",
+            "x": 1036.09,
+            "y": 763.3,
+            "color": "#397dc1",
+            "tx": 898.09,
+            "ty": 865.3,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "In-N-Out Burger"
+            ],
+            "query": "In-N-Out Burger 美国西海岸",
+            "geo": {
+              "lat": 33.95,
+              "lng": -118.39
+            },
+            "days": []
+          },
+          {
+            "id": "south-palm",
+            "x": 954.66,
+            "y": 670.83,
+            "color": "#397dc1",
+            "tx": 1032.66,
+            "ty": 608.83,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "South Palm Drive"
+            ],
+            "query": "South Palm Drive 美国西海岸",
+            "geo": {
+              "lat": 34.065,
+              "lng": -118.39
+            },
+            "days": []
+          },
+          {
+            "id": "beverly-park",
+            "x": 1009.56,
+            "y": 812.62,
+            "color": "#397dc1",
+            "tx": 1041.56,
+            "ty": 862.62,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Beverly Hills Garden Park /",
+              "比弗利山花园公园"
+            ],
+            "query": "Beverly Hills Garden Park 美国西海岸",
+            "geo": {
+              "lat": 34.0737,
+              "lng": -118.399
+            },
+            "days": [
+              1
+            ]
+          },
+          {
+            "id": "santa-monica",
+            "x": 878.76,
+            "y": 752.27,
+            "color": "#397dc1",
+            "tx": 740.76,
+            "ty": 664.27,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Santa Monica /",
+              "圣莫尼卡"
+            ],
+            "query": "Santa Monica 美国西海岸",
+            "geo": {
+              "lat": 34.0195,
+              "lng": -118.4912
+            },
+            "days": [
+              1
+            ]
+          },
+          {
+            "id": "playa-del-rey",
+            "x": 952.26,
+            "y": 813.16,
+            "color": "#397dc1",
+            "tx": 984.26,
+            "ty": 863.16,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Playa del Rey"
+            ],
+            "query": "Playa del Rey 美国西海岸",
+            "geo": {
+              "lat": 33.96,
+              "lng": -118.448
+            },
+            "days": []
+          },
+          {
+            "id": "san-gabriel",
+            "x": 1019.55,
+            "y": 709.84,
+            "color": "#397dc1",
+            "tx": 1051.55,
+            "ty": 677.84,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "San Gabriel /",
+              "圣盖博"
+            ],
+            "query": "San Gabriel 美国西海岸",
+            "geo": {
+              "lat": 34.0961,
+              "lng": -118.1058
+            },
+            "days": [
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "id": "getty",
+            "x": 928.14,
+            "y": 762.94,
+            "color": "#e77e22",
+            "tx": 790.14,
+            "ty": 674.94,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "The Getty /",
+              "盖蒂中心"
+            ],
+            "query": "The Getty 美国西海岸",
+            "geo": {
+              "lat": 34.078,
+              "lng": -118.474
+            },
+            "days": [
+              2
+            ]
+          },
+          {
+            "id": "melrose",
+            "x": 986.48,
+            "y": 769.78,
+            "color": "#397dc1",
+            "tx": 848.48,
+            "ty": 871.78,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Melrose Avenue"
+            ],
+            "query": "Melrose Avenue 美国西海岸",
+            "geo": {
+              "lat": 34.083,
+              "lng": -118.353
+            },
+            "days": []
+          },
+          {
+            "id": "hollywood",
+            "x": 913.26,
+            "y": 707.97,
+            "color": "#e77e22",
+            "tx": 835.26,
+            "ty": 783.97,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Hollywood /",
+              "好莱坞"
+            ],
+            "query": "Hollywood 美国西海岸",
+            "geo": {
+              "lat": 34.1016,
+              "lng": -118.3269
+            },
+            "days": [
+              2
+            ]
+          },
+          {
+            "id": "griffith",
+            "x": 967.2,
+            "y": 719.06,
+            "color": "#e77e22",
+            "tx": 1045.2,
+            "ty": 657.06,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Griffith Observatory /",
+              "格里菲斯天文台"
+            ],
+            "query": "Griffith Observatory 美国西海岸",
+            "geo": {
+              "lat": 34.1184,
+              "lng": -118.3004
+            },
+            "days": [
+              2
+            ]
+          },
+          {
+            "id": "desert-hills",
+            "x": 1108.31,
+            "y": 767.22,
+            "color": "#618344",
+            "tx": 970.31,
+            "ty": 869.22,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Desert Hills Premium Outlets"
+            ],
+            "query": "Desert Hills Premium Outlets 美国西海岸",
+            "geo": {
+              "lat": 33.929,
+              "lng": -116.816
+            },
+            "days": [
+              3
+            ]
+          },
+          {
+            "id": "joshua-tree",
+            "x": 1211.37,
+            "y": 804.55,
+            "color": "#618344",
+            "tx": 1133.37,
+            "ty": 880.55,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Joshua Tree National Park /",
+              "约书亚树国家公园"
+            ],
+            "query": "Joshua Tree National Park 美国西海岸",
+            "geo": {
+              "lat": 33.8734,
+              "lng": -115.901
+            },
+            "days": [
+              3
+            ]
+          },
+          {
+            "id": "skull-rock",
+            "x": 1175.44,
+            "y": 717.91,
+            "color": "#397dc1",
+            "tx": 1253.44,
+            "ty": 793.91,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Skull Rock /",
+              "骷髅岩"
+            ],
+            "query": "Skull Rock 美国西海岸",
+            "geo": {
+              "lat": 33.9998,
+              "lng": -116.059
+            },
+            "days": []
+          },
+          {
+            "id": "cholla",
+            "x": 1221.61,
+            "y": 750.5,
+            "color": "#397dc1",
+            "tx": 1143.61,
+            "ty": 688.5,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Cholla Cactus Garden /",
+              "仙人掌花园"
+            ],
+            "query": "Cholla Cactus Garden 美国西海岸",
+            "geo": {
+              "lat": 33.925,
+              "lng": -115.929
+            },
+            "days": []
+          },
+          {
+            "id": "joshua-stay",
+            "x": 1165.2,
+            "y": 771.22,
+            "color": "#618344",
+            "tx": 1243.2,
+            "ty": 709.22,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Joshua Tree /",
+              "约书亚树"
+            ],
+            "query": "Joshua Tree 美国西海岸",
+            "geo": {
+              "lat": 34.1347,
+              "lng": -116.3131
+            },
+            "days": [
+              3,
+              4
+            ]
+          },
+          {
+            "id": "santa-barbara",
+            "x": 824.32,
+            "y": 706.2,
+            "color": "#209aaa",
+            "tx": 792.32,
+            "ty": 756.2,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Santa Barbara /",
+              "圣巴巴拉"
+            ],
+            "query": "Santa Barbara 美国西海岸",
+            "geo": {
+              "lat": 34.4208,
+              "lng": -119.6982
+            },
+            "days": [
+              4
+            ]
+          },
+          {
+            "id": "big-sur",
+            "x": 617.64,
+            "y": 494.53,
+            "color": "#209aaa",
+            "tx": 755.64,
+            "ty": 596.53,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Big Sur /",
+              "大苏尔"
+            ],
+            "query": "Big Sur 美国西海岸",
+            "geo": {
+              "lat": 36.2704,
+              "lng": -121.8081
+            },
+            "days": [
+              4
+            ]
+          },
+          {
+            "id": "monterey",
+            "x": 601.22,
+            "y": 441.14,
+            "color": "#209aaa",
+            "tx": 633.22,
+            "ty": 409.14,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Monterey /",
+              "蒙特雷"
+            ],
+            "query": "Monterey 美国西海岸",
+            "geo": {
+              "lat": 36.6002,
+              "lng": -121.8947
+            },
+            "days": [
+              4,
+              5
+            ]
+          },
+          {
+            "id": "stanford",
+            "x": 595.82,
+            "y": 385.08,
+            "color": "#8865a5",
+            "tx": 563.82,
+            "ty": 435.08,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Stanford University /",
+              "斯坦福大学"
+            ],
+            "query": "Stanford University 美国西海岸",
+            "geo": {
+              "lat": 37.4275,
+              "lng": -122.1697
+            },
+            "days": [
+              5
+            ]
+          },
+          {
+            "id": "daly-city",
+            "x": 504,
+            "y": 382.89,
+            "color": "#8865a5",
+            "tx": 642,
+            "ty": 484.89,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Daly City /",
+              "戴利城"
+            ],
+            "query": "Daly City 美国西海岸",
+            "geo": {
+              "lat": 37.6879,
+              "lng": -122.4702
+            },
+            "days": [
+              5,
+              6,
+              7,
+              8
+            ]
+          },
+          {
+            "id": "warming-hut",
+            "x": 589.01,
+            "y": 221.74,
+            "color": "#397dc1",
+            "tx": 727.01,
+            "ty": 133.74,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Warming Hut Park Store"
+            ],
+            "query": "Warming Hut Park Store 美国西海岸",
+            "geo": {
+              "lat": 37.8108,
+              "lng": -122.477
+            },
+            "days": []
+          },
+          {
+            "id": "golden-gate",
+            "x": 504,
+            "y": 277.85,
+            "color": "#df6185",
+            "tx": 472,
+            "ty": 245.85,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Golden Gate Bridge /",
+              "金门大桥"
+            ],
+            "query": "Golden Gate Bridge 美国西海岸",
+            "geo": {
+              "lat": 37.8199,
+              "lng": -122.4783
+            },
+            "days": [
+              6
+            ]
+          },
+          {
+            "id": "lands-end",
+            "x": 546,
+            "y": 199,
+            "color": "#df6185",
+            "tx": 684,
+            "ty": 301,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Lands End Trail"
+            ],
+            "query": "Lands End Trail 美国西海岸",
+            "geo": {
+              "lat": 37.781,
+              "lng": -122.504
+            },
+            "days": [
+              6
+            ]
+          },
+          {
+            "id": "half-moon-bay",
+            "x": 638.74,
+            "y": 354.99,
+            "color": "#df6185",
+            "tx": 670.74,
+            "ty": 322.99,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Half Moon Bay /",
+              "半月湾"
+            ],
+            "query": "Half Moon Bay 美国西海岸",
+            "geo": {
+              "lat": 37.4636,
+              "lng": -122.4286
+            },
+            "days": [
+              6
+            ]
+          },
+          {
+            "id": "haight",
+            "x": 504,
+            "y": 230.32,
+            "color": "#397dc1",
+            "tx": 582,
+            "ty": 168.32,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Haight-Ashbury"
+            ],
+            "query": "Haight-Ashbury 美国西海岸",
+            "geo": {
+              "lat": 37.7694,
+              "lng": -122.4469
+            },
+            "days": [
+              7
+            ]
+          },
+          {
+            "id": "powell",
+            "x": 636.16,
+            "y": 246.47,
+            "color": "#397dc1",
+            "tx": 668.16,
+            "ty": 214.47,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Powell Street"
+            ],
+            "query": "Powell Street 美国西海岸",
+            "geo": {
+              "lat": 37.7865,
+              "lng": -122.408
+            },
+            "days": []
+          },
+          {
+            "id": "california",
+            "x": 551.94,
+            "y": 357.73,
+            "color": "#397dc1",
+            "tx": 473.94,
+            "ty": 433.73,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "California Street"
+            ],
+            "query": "California Street 美国西海岸",
+            "geo": {
+              "lat": 37.792,
+              "lng": -122.408
+            },
+            "days": []
+          },
+          {
+            "id": "lombard",
+            "x": 593.01,
+            "y": 330.58,
+            "color": "#397dc1",
+            "tx": 671.01,
+            "ty": 406.58,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Lombard Street /",
+              "九曲花街"
+            ],
+            "query": "Lombard Street 美国西海岸",
+            "geo": {
+              "lat": 37.8021,
+              "lng": -122.4187
+            },
+            "days": []
+          },
+          {
+            "id": "hyde",
+            "x": 544.91,
+            "y": 248.78,
+            "color": "#397dc1",
+            "tx": 466.91,
+            "ty": 186.78,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Hyde Street"
+            ],
+            "query": "Hyde Street 美国西海岸",
+            "geo": {
+              "lat": 37.799,
+              "lng": -122.419
+            },
+            "days": []
+          },
+          {
+            "id": "chinatown",
+            "x": 641.01,
+            "y": 301.19,
+            "color": "#397dc1",
+            "tx": 719.01,
+            "ty": 239.19,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Chinatown /",
+              "唐人街"
+            ],
+            "query": "Chinatown 美国西海岸",
+            "geo": {
+              "lat": 37.7941,
+              "lng": -122.4078
+            },
+            "days": [
+              7
+            ]
+          },
+          {
+            "id": "pier-39",
+            "x": 504,
+            "y": 332.2,
+            "color": "#397dc1",
+            "tx": 472,
+            "ty": 300.2,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Pier 39 /",
+              "39号码头"
+            ],
+            "query": "Pier 39 美国西海岸",
+            "geo": {
+              "lat": 37.8087,
+              "lng": -122.4098
+            },
+            "days": []
+          },
+          {
+            "id": "fishermans",
+            "x": 593.36,
+            "y": 274.32,
+            "color": "#397dc1",
+            "tx": 455.36,
+            "ty": 186.32,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Fisherman’s Wharf /",
+              "渔人码头"
+            ],
+            "query": "Fisherman’s Wharf 美国西海岸",
+            "geo": {
+              "lat": 37.808,
+              "lng": -122.418
+            },
+            "days": [
+              7
+            ]
+          },
+          {
+            "id": "sfo",
+            "x": 547.13,
+            "y": 304.81,
+            "color": "#e77e22",
+            "tx": 685.13,
+            "ty": 406.81,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "San Francisco International Airport /",
+              "旧金山国际机场"
+            ],
+            "query": "San Francisco International Airport 美国西海岸",
+            "geo": {
+              "lat": 37.6213,
+              "lng": -122.379
+            },
+            "days": [
+              8
+            ]
+          }
+        ],
+        "overviewPlaceIds": [
+          "lax",
+          "san-gabriel",
+          "hollywood",
+          "joshua-tree",
+          "joshua-stay",
+          "big-sur",
+          "monterey",
+          "daly-city",
+          "chinatown",
+          "sfo"
+        ],
+        "dailyLayouts": {
+          "1": {
+            "places": [
+              "lax",
+              "inout",
+              "south-palm",
+              "beverly-park",
+              "santa-monica",
+              "playa-del-rey",
+              "san-gabriel"
+            ],
+            "labels": {
+              "lax": {
+                "x": 866.58,
+                "y": 855.69,
+                "anchor": "end"
+              },
+              "inout": {
+                "x": 898.09,
+                "y": 865.3,
+                "anchor": "end"
+              },
+              "south-palm": {
+                "x": 1032.66,
+                "y": 608.83,
+                "anchor": "start"
+              },
+              "beverly-park": {
+                "x": 1041.56,
+                "y": 862.62,
+                "anchor": "start"
+              },
+              "santa-monica": {
+                "x": 740.76,
+                "y": 664.27,
+                "anchor": "end"
+              },
+              "playa-del-rey": {
+                "x": 984.26,
+                "y": 863.16,
+                "anchor": "start"
+              },
+              "san-gabriel": {
+                "x": 1051.55,
+                "y": 677.84,
+                "anchor": "start"
+              }
+            },
+            "transport": [
+              {
+                "items": [],
+                "x": 967.34,
+                "y": 784.5
+              },
+              {
+                "items": [],
+                "x": 995.38,
+                "y": 717.07
+              },
+              {
+                "items": [],
+                "x": 982.11,
+                "y": 741.73
+              },
+              {
+                "items": [],
+                "x": 944.16,
+                "y": 782.44
+              },
+              {
+                "items": [],
+                "x": 915.51,
+                "y": 782.71
+              },
+              {
+                "items": [],
+                "x": 985.9,
+                "y": 761.5
+              }
+            ]
+          },
+          "2": {
+            "places": [
+              "san-gabriel",
+              "getty",
+              "melrose",
+              "hollywood",
+              "griffith"
+            ],
+            "labels": {
+              "san-gabriel": {
+                "x": 1051.55,
+                "y": 677.84,
+                "anchor": "start"
+              },
+              "getty": {
+                "x": 790.14,
+                "y": 674.94,
+                "anchor": "end"
+              },
+              "melrose": {
+                "x": 848.48,
+                "y": 871.78,
+                "anchor": "end"
+              },
+              "hollywood": {
+                "x": 835.26,
+                "y": 783.97,
+                "anchor": "end"
+              },
+              "griffith": {
+                "x": 1045.2,
+                "y": 657.06,
+                "anchor": "start"
+              }
+            },
+            "transport": [
+              {
+                "items": [],
+                "x": 973.85,
+                "y": 736.39
+              },
+              {
+                "items": [],
+                "x": 957.31,
+                "y": 766.36
+              },
+              {
+                "items": [],
+                "x": 949.87,
+                "y": 738.88
+              },
+              {
+                "items": [],
+                "x": 940.23,
+                "y": 713.51
+              },
+              {
+                "items": [],
+                "x": 993.38,
+                "y": 714.45
+              }
+            ]
+          },
+          "3": {
+            "places": [
+              "san-gabriel",
+              "desert-hills",
+              "joshua-tree",
+              "skull-rock",
+              "cholla",
+              "joshua-stay"
+            ],
+            "labels": {
+              "san-gabriel": {
+                "x": 1051.55,
+                "y": 677.84,
+                "anchor": "start"
+              },
+              "desert-hills": {
+                "x": 970.31,
+                "y": 869.22,
+                "anchor": "end"
+              },
+              "joshua-tree": {
+                "x": 1133.37,
+                "y": 880.55,
+                "anchor": "end"
+              },
+              "skull-rock": {
+                "x": 1253.44,
+                "y": 793.91,
+                "anchor": "start"
+              },
+              "cholla": {
+                "x": 1143.61,
+                "y": 688.5,
+                "anchor": "end"
+              },
+              "joshua-stay": {
+                "x": 1243.2,
+                "y": 709.22,
+                "anchor": "start"
+              }
+            },
+            "transport": [
+              {
+                "items": [],
+                "x": 1063.93,
+                "y": 738.53
+              },
+              {
+                "items": [],
+                "x": 1159.84,
+                "y": 785.88
+              },
+              {
+                "items": [],
+                "x": 1193.4,
+                "y": 761.23
+              },
+              {
+                "items": [],
+                "x": 1198.53,
+                "y": 734.2
+              },
+              {
+                "items": [],
+                "x": 1193.4,
+                "y": 760.86
+              }
+            ]
+          },
+          "4": {
+            "places": [
+              "joshua-stay",
+              "santa-barbara",
+              "big-sur",
+              "monterey"
+            ],
+            "labels": {
+              "joshua-stay": {
+                "x": 1243.2,
+                "y": 709.22,
+                "anchor": "start"
+              },
+              "santa-barbara": {
+                "x": 792.32,
+                "y": 756.2,
+                "anchor": "end"
+              },
+              "big-sur": {
+                "x": 755.64,
+                "y": 596.53,
+                "anchor": "start"
+              },
+              "monterey": {
+                "x": 633.22,
+                "y": 409.14,
+                "anchor": "start"
+              }
+            },
+            "transport": [
+              {
+                "items": [],
+                "x": 994.76,
+                "y": 738.71
+              },
+              {
+                "items": [],
+                "x": 720.98,
+                "y": 600.37
+              },
+              {
+                "items": [],
+                "x": 609.43,
+                "y": 467.83
+              }
+            ]
+          },
+          "5": {
+            "places": [
+              "monterey",
+              "stanford",
+              "daly-city"
+            ],
+            "labels": {
+              "monterey": {
+                "x": 633.22,
+                "y": 409.14,
+                "anchor": "start"
+              },
+              "stanford": {
+                "x": 563.82,
+                "y": 435.08,
+                "anchor": "end"
+              },
+              "daly-city": {
+                "x": 642,
+                "y": 484.89,
+                "anchor": "start"
+              }
+            },
+            "transport": [
+              {
+                "items": [],
+                "x": 598.52,
+                "y": 413.11
+              },
+              {
+                "items": [],
+                "x": 549.91,
+                "y": 383.99
+              }
+            ]
+          },
+          "6": {
+            "places": [
+              "daly-city",
+              "warming-hut",
+              "golden-gate",
+              "lands-end",
+              "half-moon-bay"
+            ],
+            "labels": {
+              "daly-city": {
+                "x": 642,
+                "y": 484.89,
+                "anchor": "start"
+              },
+              "warming-hut": {
+                "x": 727.01,
+                "y": 133.74,
+                "anchor": "start"
+              },
+              "golden-gate": {
+                "x": 472,
+                "y": 245.85,
+                "anchor": "end"
+              },
+              "lands-end": {
+                "x": 684,
+                "y": 301,
+                "anchor": "start"
+              },
+              "half-moon-bay": {
+                "x": 670.74,
+                "y": 322.99,
+                "anchor": "start"
+              }
+            },
+            "transport": [
+              {
+                "items": [],
+                "x": 546.5,
+                "y": 302.31
+              },
+              {
+                "items": [],
+                "x": 546.5,
+                "y": 249.8
+              },
+              {
+                "items": [],
+                "x": 525,
+                "y": 238.43
+              },
+              {
+                "items": [],
+                "x": 592.37,
+                "y": 277
+              },
+              {
+                "items": [],
+                "x": 571.37,
+                "y": 368.94
+              }
+            ]
+          },
+          "7": {
+            "places": [
+              "daly-city",
+              "haight",
+              "powell",
+              "california",
+              "lombard",
+              "hyde",
+              "chinatown",
+              "pier-39",
+              "fishermans"
+            ],
+            "labels": {
+              "daly-city": {
+                "x": 642,
+                "y": 484.89,
+                "anchor": "start"
+              },
+              "haight": {
+                "x": 582,
+                "y": 168.32,
+                "anchor": "start"
+              },
+              "powell": {
+                "x": 668.16,
+                "y": 214.47,
+                "anchor": "start"
+              },
+              "california": {
+                "x": 473.94,
+                "y": 433.73,
+                "anchor": "end"
+              },
+              "lombard": {
+                "x": 671.01,
+                "y": 406.58,
+                "anchor": "start"
+              },
+              "hyde": {
+                "x": 466.91,
+                "y": 186.78,
+                "anchor": "end"
+              },
+              "chinatown": {
+                "x": 719.01,
+                "y": 239.19,
+                "anchor": "start"
+              },
+              "pier-39": {
+                "x": 472,
+                "y": 300.2,
+                "anchor": "end"
+              },
+              "fishermans": {
+                "x": 455.36,
+                "y": 186.32,
+                "anchor": "end"
+              }
+            },
+            "transport": [
+              {
+                "items": [],
+                "x": 504,
+                "y": 306.61
+              },
+              {
+                "items": [],
+                "x": 570.08,
+                "y": 238.39
+              },
+              {
+                "items": [],
+                "x": 594.05,
+                "y": 302.1
+              },
+              {
+                "items": [],
+                "x": 572.48,
+                "y": 344.15
+              },
+              {
+                "items": [],
+                "x": 568.96,
+                "y": 289.68
+              },
+              {
+                "items": [],
+                "x": 592.96,
+                "y": 274.99
+              },
+              {
+                "items": [],
+                "x": 572.5,
+                "y": 316.69
+              },
+              {
+                "items": [],
+                "x": 548.68,
+                "y": 303.26
+              },
+              {
+                "items": [],
+                "x": 548.68,
+                "y": 328.61
+              }
+            ]
+          },
+          "8": {
+            "places": [
+              "daly-city",
+              "sfo"
+            ],
+            "labels": {
+              "daly-city": {
+                "x": 642,
+                "y": 484.89,
+                "anchor": "start"
+              },
+              "sfo": {
+                "x": 685.13,
+                "y": 406.81,
+                "anchor": "start"
+              }
+            },
+            "transport": [
+              {
+                "items": [],
+                "x": 525.57,
+                "y": 343.85
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "ledger": {
+    "travelers": [
+      "Zixiang",
+      "Ziqi",
+      "Weiyang",
+      "Chentao"
+    ],
+    "splitMode": "equal"
+  }
+}

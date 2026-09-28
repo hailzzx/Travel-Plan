@@ -1,0 +1,154 @@
+:root {
+  --paper: #efe6d1;
+  --surface: #fff9ea;
+  --ink: #17362b;
+  --muted: #6d776a;
+  --line: #d8cdb4;
+  --lake: #274f42;
+  --lake-soft: #e1e8d9;
+  --forest: #204534;
+  --terracotta: #db7139;
+  --warning: #b7492d;
+  --shadow: 0 20px 48px rgba(49, 47, 27, .12);
+}
+
+html { background: var(--paper); }
+body {
+  min-height: 100dvh;
+  background: radial-gradient(circle at 18% 0%, #f8ebca 0, #efe6d1 42%, #e9dfcb 100%);
+  color: var(--ink);
+  padding-bottom: calc(110px + var(--safe-bottom));
+}
+main[hidden], .travel-panel[hidden], .bottom-tabs [hidden] { display: none !important; }
+.topbar { display: none; }
+.travel-panel { width: 100%; }
+.travel-panel--home { width: min(100%, 800px); margin: 0 auto; padding: 22px 16px 32px; }
+
+.home-topline { min-height: 54px; display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 16px; }
+.home-edition { color: var(--forest); font: 900 clamp(16px, 4.5vw, 24px)/1 system-ui, -apple-system, sans-serif; letter-spacing: -.045em; white-space: nowrap; }
+.home-edition span { color: var(--terracotta); }
+.departure-pill { flex: 0 0 auto; min-height: 42px; padding: 0 13px; display: inline-flex; align-items: center; gap: 8px; border: 1px solid #ccc5aa; border-radius: 99px; background: #f8f0ddbd; color: #44624d; font-size: 12px; font-weight: 800; box-shadow: inset 0 1px #fff9; }
+.departure-pill i { width: 8px; height: 8px; border-radius: 50%; background: var(--terracotta); }
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-height: clamp(600px, 132vw, 790px);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  border: 1px solid #d0c5a7;
+  border-radius: 31px;
+  background: #f3e2bd url("assets/hero-west-coast.webp") center / cover no-repeat;
+  box-shadow: var(--shadow), inset 0 0 0 1px #fff7;
+}
+.hero::after { content: ""; position: absolute; inset: 40% 0 0; z-index: -1; background: linear-gradient(180deg, transparent 50%, #0d281d66 100%); pointer-events: none; }
+.hero__copy { padding: clamp(35px, 8vw, 72px) clamp(24px, 6vw, 55px) 0; }
+.hero__eyebrow { margin: 0 0 18px; color: #5e6e57; font: 800 11px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .19em; }
+.hero__masthead { display: block; max-width: 100%; color: #15392b; font: 950 clamp(72px, 17vw, 150px)/.85 Impact, "Arial Narrow", system-ui, sans-serif; letter-spacing: -.085em; white-space: nowrap; }
+.hero__masthead span { color: #d26b34; }
+.hero__rule { display: block; width: 100%; height: 2px; margin: 27px 0 18px; background: linear-gradient(90deg, #c86535 0 47%, transparent 47% 54%, #c86535 54% 100%); }
+.hero__days { margin: 0; color: #15392b; font: 500 clamp(47px, 12vw, 84px)/.95 Georgia, "Songti SC", serif; letter-spacing: -.055em; white-space: nowrap; }
+.hero h1 { max-width: none; margin: 4px 0 0; color: #15392b; font: 650 clamp(24px, 6vw, 40px)/1.15 Georgia, "Songti SC", serif; letter-spacing: .045em; }
+.hero__date { margin: 20px 0 0; color: #294538; font: 750 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .06em; }
+.hero__destination { margin: 0 clamp(15px, 4vw, 36px) clamp(18px, 4vw, 36px); min-height: 100px; padding: 18px 18px 18px 21px; display: flex; align-items: center; justify-content: space-between; gap: 10px; border: 1px solid #b5ab81; background: #173d2ded; color: #fff2d8; box-shadow: 7px 7px 0 #be7649a8; }
+.hero__destination div { min-width: 0; }
+.hero__destination span { display: block; color: #f3aa60; font: 800 10px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .1em; }
+.hero__destination strong { display: block; margin-top: 8px; font: 750 clamp(16px, 4.8vw, 23px)/1.18 Georgia, "Songti SC", serif; }
+.hero__destination small { display: block; margin-top: 5px; color: #c7d1bd; font-size: 11px; line-height: 1.4; }
+.hero__destination a { width: 44px; height: 44px; flex: 0 0 44px; display: grid; place-items: center; border-radius: 50%; background: #efac4e; color: #15392b; font: 700 27px/1 system-ui; text-decoration: none; }
+
+.home-shortcuts { display: grid; gap: 10px; margin: 28px 2px 0; }
+.home-shortcuts a { position: relative; min-height: 77px; padding: 15px 52px 14px 18px; display: grid; gap: 5px; border: 1px solid var(--line); border-radius: 15px; background: #f8f1dfc9; text-decoration: none; box-shadow: 0 4px 14px #403d2610; }
+.home-shortcuts a span { color: var(--terracotta); font: 800 10px/1.1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .13em; }
+.home-shortcuts a strong { font-size: 17px; line-height: 1.2; }
+.home-shortcuts a b { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: var(--forest); font-size: 22px; }
+
+.panel-intro { width: min(100%, var(--content)); margin: 0 auto; padding: 44px 20px 28px; border-bottom: 2px solid var(--forest); }
+.panel-intro > span { color: var(--terracotta); font: 800 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .15em; }
+.panel-intro h2 { margin: 17px 0 12px; color: var(--forest); font: 650 clamp(37px, 10vw, 60px)/1.08 Georgia, "Songti SC", serif; letter-spacing: -.04em; }
+.panel-intro p { margin: 0; color: var(--muted); font-size: 13px; font-weight: 650; }
+.section { padding: 35px 20px 42px; scroll-margin-top: 14px; }
+.section + .section { border-top: 1px solid var(--line); }
+.section-kicker { color: var(--terracotta); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.section-heading h2 { color: var(--forest); font: 650 clamp(27px, 7vw, 36px)/1.13 Georgia, "Songti SC", serif; letter-spacing: -.04em; }
+.soft-label, .section-index { color: #8c7154; }
+
+.flight-card { border: 1px solid #47614f; border-radius: 21px; background: #173d2e; box-shadow: 8px 8px 0 #d2c2a1; }
+.flight-card__airlines { color: #e6aa6c; }
+.flight-stop__dot { border-color: #d8a85a; }
+.flight-segment i { color: #e3ae5f; background: #b7ad76; }
+.carousel-dot.is-active { background: var(--terracotta); }
+.travel-map-scroll { border-color: #beae8d; background: #f6edd9; }
+.route-region-tabs button[aria-pressed="true"], .route-day-tabs button[aria-pressed="true"] { background: var(--forest); color: #fff2db; }
+
+.timeline::before, .day-dot { display: none; }
+.day-card { padding-left: 0; }
+.day-card + .day-card { margin-top: 11px; }
+.day-toggle { min-height: 94px; padding: 17px 16px; border: 1px solid #d5c7a9; border-radius: 16px; background: #f8f0dd; box-shadow: 4px 5px 0 #ddcfb5; }
+.day-meta { color: var(--terracotta); }
+.day-title { display: block; color: var(--forest); font: 700 21px/1.25 Georgia, "Songti SC", serif; }
+.day-locations { display: block; color: #697369; }
+.day-chevron { border-color: #bcc3a9; color: var(--forest); }
+.day-detail { padding: 22px 16px 14px; margin-top: -10px; border: 1px solid #d5c7a9; border-top: 0; border-radius: 0 0 16px 16px; background: #fff8e8; }
+.schedule-item::before { background: #d8cdb4; }
+.schedule-item::after { border-color: var(--terracotta); background: #fff8e8; }
+.cost-tag { background: #eae0c9; color: var(--forest); }
+.detail-note { border-left-color: var(--terracotta); background: #f5ead8; }
+
+.stay-list { display: grid; gap: 12px; }
+.stay-card { display: grid; grid-template-columns: 39px 1fr; gap: 13px; padding: 18px 16px; border: 1px solid #d5c7a9; border-radius: 15px; background: #fbf4e4; box-shadow: 4px 5px 0 #ddcfb5; }
+.stay-card__number { color: var(--terracotta); font: 800 17px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; }
+.stay-card__dates { color: #946849; font: 750 11px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; }
+.stay-card h3 { margin: 7px 0 7px; color: var(--forest); font-size: 17px; line-height: 1.3; }
+.stay-card p { margin: 0; color: #56675a; font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; }
+.stay-card small { display: block; margin-top: 10px; color: #7c725e; font-size: 11px; }
+.stay-card code { color: var(--forest); font-weight: 800; }
+
+.rental-panel { border-radius: 20px; background: var(--forest); }
+.return-deadline { background: #f6e4c7; color: #713f2d; border-bottom-color: var(--terracotta); }
+.rental-countdown { background: #b6673d; }
+.rental-countdown span, .rental-countdown small { color: #ffecce; }
+.rental-sub, .rental-stop span, .rental-price { color: #cdd9cb; }
+.rental-stop__label { color: #efb87d; }
+.drive-note-tabs button[aria-expanded="true"]::after { background: var(--terracotta); }
+.todo-form input { background: #fbf4e4; }
+.todo-form button { background: var(--forest); }
+.todo-check, .packing-item input { border-color: var(--forest); }
+
+.ledger-view { padding-bottom: 20px; }
+.footer { padding: 34px 20px 85px; border-top-color: var(--line); }
+.footer a { color: var(--forest); font-weight: 750; }
+
+.bottom-tabs { position: fixed; z-index: 45; left: 50%; bottom: calc(12px + var(--safe-bottom)); transform: translateX(-50%); width: min(720px, calc(100% - 24px)); min-height: 74px; padding: 6px; display: flex; gap: 2px; border: 1px solid #3c4842; border-radius: 27px; background: #14262c; box-shadow: 0 13px 35px #15262955; }
+.bottom-tabs a { min-width: 0; flex: 1 1 0; min-height: 61px; padding: 7px 2px 5px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border-radius: 21px; color: #9caaa9; text-decoration: none; font-size: 11px; font-weight: 730; transition: background .18s ease, color .18s ease; }
+.bottom-tabs a svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.bottom-tabs a svg circle { fill: currentColor; stroke: none; }
+.bottom-tabs a[aria-current="page"] { background: #263941; color: #fff5df; }
+.bottom-tabs a[aria-current="page"] svg { color: #e97850; }
+.bottom-tabs a:active { transform: scale(.96); }
+:focus-visible { outline-color: var(--terracotta); }
+
+@media (min-width: 700px) {
+  .travel-panel--home { padding-top: 30px; }
+  .hero { min-height: 790px; }
+  .hero__copy { padding-top: 75px; }
+  .home-shortcuts { grid-template-columns: repeat(3, 1fr); }
+  .home-shortcuts a { min-height: 108px; }
+  .panel-intro { padding-top: 55px; }
+  .section { padding-inline: 0; }
+}
+@media (max-width: 380px) {
+  .home-edition { font-size: 15px; }
+  .departure-pill { padding-inline: 9px; font-size: 10px; }
+  .hero__masthead { font-size: 18vw; }
+  .hero__days { font-size: 12vw; }
+  .hero__destination strong { font-size: 15px; }
+  .bottom-tabs { width: calc(100% - 12px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bottom-tabs a { transition: none; }
+}
