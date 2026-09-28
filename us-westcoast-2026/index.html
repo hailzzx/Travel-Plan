@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#efe6d1">
+  <meta name="theme-color" content="#f3f0e8">
   <meta name="format-detection" content="telephone=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -11,13 +11,14 @@
   <meta name="description" content="2026 年 10 月美国西海岸八日旅行计划，包含航班、路线、每日行程、租车、待办与记账。">
   <link rel="stylesheet" href="styles.css?v=20260910-3">
   <link rel="stylesheet" href="ledger.css?v=20260910-2">
-  <link rel="stylesheet" href="poster-theme.css?v=20260928-1">
+  <link rel="stylesheet" href="poster-theme.css?v=20260928-2">
+  <link rel="stylesheet" href="editorial-theme.css?v=20260928-1">
   <script src="runtime-storage.js?v=20260910-2" defer></script>
   <script src="overview-map.js?v=20260910-2" defer></script>
-  <script src="route-ui.js?v=20260910-2" defer></script>
-  <script src="app.js?v=20260910-4" defer></script>
+  <script src="atlas-ui.js?v=20260928-1" defer></script>
+  <script src="app.js?v=20260928-1" defer></script>
   <script src="ticket-pdf-preview.js?v=20260910-2" defer></script>
-  <script src="ledger.js?v=20260910-3" defer></script>
+  <script src="ledger.js?v=20260928-1" defer></script>
   <script src="site-navigation.js?v=20260910-2" defer></script>
 </head>
 <body>
@@ -84,7 +85,7 @@
       <section class="section route-section" id="route" aria-labelledby="route-title" data-module="overview" hidden>
         <div class="section-heading"><div><p class="section-kicker">INTERACTIVE ROUTE ATLAS</p><h2 id="route-title">本次旅程</h2></div><span class="soft-label" id="route-day-count"></span></div>
         <div id="route-explorer"></div>
-        <p class="route-caption">路线为行程示意，实际驾驶和步行请使用当天的 Google Maps 导航。</p>
+        <p class="route-caption">底图采用美国人口调查局 2025 年州界数据，地点按实际坐标标注；连线只表达行程顺序。车程为估计值，实时导航与封路情况请以当天信息为准。</p>
       </section>
     </div>
 

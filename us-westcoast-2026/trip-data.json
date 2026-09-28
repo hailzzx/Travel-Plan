@@ -267,9 +267,28 @@
       },
       "confirmationNumber": "9739673198"
     },
-    "rentalChecklist": [],
-    "drivingNotes": [],
-    "drivingReferenceLinks": [],
+    "rentalChecklist": [
+      "取车前：带护照、本人有效驾照及符合 Sixt 要求的英文翻译件、预订确认单和主驾驶人名下付款卡；其他驾驶人须在柜台登记。",
+      "签字前：核对取还车门店、时间、车辆级别、保险和免赔额、额外驾驶人、道路救援、里程及燃油条款；把柜台新增收费逐项问清。",
+      "驶离前：环车拍摄车身、轮毂、玻璃、内饰和已有划痕；确认损伤记录与照片一致，并拍油表、里程表。",
+      "上路前：确认车灯、雨刷、胎压提示、备胎或补胎包及导航连接正常；设置好驾驶座与后视镜。",
+      "还车前：核对渔人码头 655 Beach Street, Level G3 的入口和营业时间；按合同要求补油并保留加油小票，清走个人物品。",
+      "交车时：再拍车身四面、油表、里程和停车位置；索取还车凭证，之后核对最终账单与信用卡预授权释放。"
+    ],
+    "drivingNotes": [
+      "美国靠右行驶，但车速标牌使用 mph（英里/小时），车内导航和限速提示不要误当作 km/h。",
+      "加州红灯右转通常须先在停止线前完全停住，礼让行人和来车；遇到 No Turn on Red 或红色箭头不得右转。",
+      "STOP 标志须完全停住。四向 STOP 路口通常先到先行；同时到达让右侧车辆先行，并始终礼让行人。",
+      "校车闪红灯时按路况要求停车等待；隔离带或多车道的例外规则见加州 DMV 手册。",
+      "开车时只在必要时用免提电话；不要手持看导航。乘客全程系安全带，儿童座椅按年龄与身高规定使用。",
+      "HOV / Carpool 车道按标牌人数和时段使用，进出注意双实线限制；停车先看路边颜色、限时和清扫日标牌。",
+      "1 号公路大苏尔段易受落石与施工影响，出发前查看 Caltrans QuickMap；夜间弯道、雾和无信号路段放慢速度。"
+    ],
+    "drivingReferenceLinks": [
+      { "label": "加州 DMV 驾驶手册", "url": "https://www.dmv.ca.gov/portal/handbook/california-driver-handbook/" },
+      { "label": "Caltrans 实时路况", "url": "https://quickmap.dot.ca.gov/" },
+      { "label": "Sixt 取车说明", "url": "https://www.sixt.com/help-center/app/articles/vehicle-pickup/" }
+    ],
     "plannedRoadLegs": [],
     "publicTransitAndRail": []
   },

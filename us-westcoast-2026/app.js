@@ -207,7 +207,7 @@ function renderStays() {
       <div class="stay-card__body">
         <span class="stay-card__dates">${escapeHtml(formatCompactDate(stay.checkIn))} — ${escapeHtml(formatCompactDate(stay.checkOut))}</span>
         <h3>${escapeHtml(stay.name)}</h3>
-        <p>${escapeHtml(stay.address || "地址待补充")}</p>
+        <p><a class="stay-map-link" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(stay.address || stay.name)}" target="_blank" rel="noopener noreferrer">${escapeHtml(stay.address || "地址待补充")} <span aria-hidden="true">↗</span><small>在 Google Maps 中查看</small></a></p>
         ${stay.confirmationCode ? `<small>确认号 <code>${escapeHtml(stay.confirmationCode)}</code></small>` : ""}
       </div>
     </article>
@@ -966,13 +966,9 @@ function startCountdowns() {
 }
 
 function preloadDefaultRouteMap() {
-  const routeMap = state.data?.routeMap;
-  const source = travelMapSource(routeMap, routeMap?.defaultRegionId);
-  if (!source?.baseImage) return;
   const image = new Image();
   image.decoding = "async";
-  image.fetchPriority = "high";
-  image.src = source.baseImage;
+  image.src = "assets/western-states.svg";
   state.routeMapPreload = image;
 }
 

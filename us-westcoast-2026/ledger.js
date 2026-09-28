@@ -3,9 +3,9 @@
 
   const STORAGE_VERSION = 1;
   const DEFAULT_SETTINGS = Object.freeze({
-    baseCurrency: "CNY",
-    commonCurrencies: ["EUR", "CHF", "HKD"],
-    lastCurrency: "CNY"
+    baseCurrency: "USD",
+    commonCurrencies: ["CNY"],
+    lastCurrency: "USD"
   });
   const CATEGORIES = Object.freeze(["餐饮", "交通", "住宿", "门票", "购物", "其他"]);
   const AVATAR_COLORS = Object.freeze([
@@ -267,15 +267,11 @@
     });
     const travelerIds = new Set(travelers.map((traveler) => traveler.id));
     const requestedBase = String(raw.settings?.baseCurrency || DEFAULT_SETTINGS.baseCurrency).toUpperCase();
-    const baseCurrency = CURRENCY_BY_CODE.has(requestedBase) ? requestedBase : DEFAULT_SETTINGS.baseCurrency;
-    const commonCurrencies = [...new Set(
-      (Array.isArray(raw.settings?.commonCurrencies) ? raw.settings.commonCurrencies : DEFAULT_SETTINGS.commonCurrencies)
-        .map((code) => String(code).toUpperCase())
-        .filter((code) => CURRENCY_BY_CODE.has(code) && code !== baseCurrency)
-    )];
-    const availableCurrencies = new Set([baseCurrency, ...commonCurrencies]);
-    const requestedLast = String(raw.settings?.lastCurrency || baseCurrency).toUpperCase();
-    const lastCurrency = availableCurrencies.has(requestedLast) ? requestedLast : baseCurrency;
+    // Preserve an existing ledger's settlement currency, but use USD for new books.
+    const hasExistingBills = Array.isArray(raw.bills) && raw.bills.length > 0;
+    const baseCurrency = hasExistingBills && CURRENCY_BY_CODE.has(requestedBase) ? requestedBase : "USD";
+    const commonCurrencies = ["USD", "CNY"].filter((code) => code !== baseCurrency);
+    const lastCurrency = "USD";
     const bills = (Array.isArray(raw.bills) ? raw.bills : []).flatMap((bill) => {
       const originalAmountCents = Number(bill?.originalAmountCents);
       const baseAmountCents = Number(bill?.baseAmountCents);
@@ -511,11 +507,7 @@
   }
 
   function availableCurrencyCodes(extraCode = "") {
-    return [...new Set([
-      ledgerData.settings.baseCurrency,
-      ...ledgerData.settings.commonCurrencies,
-      extraCode
-    ].filter((code) => CURRENCY_BY_CODE.has(code)))];
+    return [...new Set(["USD", "CNY", extraCode].filter((code) => CURRENCY_BY_CODE.has(code)))];
   }
 
   function billShares(bill) {
@@ -636,7 +628,7 @@
   function renderBillForm() {
     const editingBill = ledgerData.bills.find((bill) => bill.id === editingBillId) || null;
     const draft = editingBill ? null : billDraft;
-    const currency = editingBill?.currency || draft?.currency || ledgerData.settings.lastCurrency;
+    const currency = editingBill?.currency || draft?.currency || "USD";
     const baseCurrency = ledgerData.settings.baseCurrency;
     const isForeign = currency !== baseCurrency;
     const selectedParticipants = new Set(
@@ -1094,24 +1086,15 @@
             ${baseLocked ? `<p class="ledger-setting-note">已有账单后，本位币会锁定，避免历史换算金额失真。</p>` : ""}
           </section>
           <section class="ledger-setting-group">
-            <div class="ledger-setting-heading">
-              <div><h3>常用外币</h3><p>只在记账时显示你选中的币种</p></div>
-              <button class="ledger-text-button" type="button" data-ledger-action="pick-common-currency">添加货币</button>
-            </div>
-            ${ledgerData.settings.commonCurrencies.length
-              ? `<div class="ledger-currency-chips">${ledgerData.settings.commonCurrencies.map(renderCurrencyChip).join("")}</div>`
-              : `<p class="ledger-dialog-empty">尚未添加常用外币。</p>`}
+            <div class="ledger-setting-heading"><div><h3>可用币种</h3><p>本次旅行只使用美元和人民币；新账单默认美元。</p></div></div>
+            <p class="ledger-dialog-empty">USD · 美元　/　CNY · 人民币</p>
           </section>
         </div>
       </dialog>`;
   }
 
   function searchedCurrencies() {
-    const query = normalizeSearch(currencyQuery);
-    if (!query) return [];
-    return CURRENCY_CATALOG
-      .filter((currency) => currencySearchText.get(currency.code).includes(query))
-      .slice(0, 24);
+    return ["USD", "CNY"].map(currencyByCode);
   }
 
   function currencyResultMarkup(currency) {
@@ -1129,13 +1112,7 @@
   }
 
   function renderCurrencyResultsMarkup() {
-    const currencies = searchedCurrencies();
-    if (!normalizeSearch(currencyQuery)) {
-      return `<div class="ledger-currency-empty"><p>输入货币名称开始查找</p><small>例如：港币、Hong Kong 或 HKD</small></div>`;
-    }
-    return currencies.length
-      ? currencies.map(currencyResultMarkup).join("")
-      : `<div class="ledger-currency-empty"><p>没有找到相关货币</p><small>可以尝试中文名、英文名、代码、符号或国家与地区。</small></div>`;
+    return searchedCurrencies().map(currencyResultMarkup).join("");
   }
 
   function renderCurrencyDialog() {
@@ -1143,18 +1120,13 @@
       <dialog class="ledger-dialog ledger-currency-dialog" data-ledger-dialog="currency" aria-labelledby="ledger-currency-dialog-title">
         <div class="ledger-dialog-header">
           <div>
-            <p class="ledger-section-kicker">世界货币</p>
-            <h2 id="ledger-currency-dialog-title">${currencyPickerMode === "base" ? "选择本位币" : "添加常用外币"}</h2>
+            <p class="ledger-section-kicker">本次旅行</p>
+            <h2 id="ledger-currency-dialog-title">选择本位币</h2>
           </div>
           <button class="ledger-dialog-close" type="button" data-ledger-action="back-to-settings" aria-label="返回设置">×</button>
         </div>
         <div class="ledger-dialog-body">
-          <label class="ledger-currency-search">
-            <span class="ledger-visually-hidden">搜索货币</span>
-            <span aria-hidden="true">⌕</span>
-            <input class="ledger-input" type="search" data-ledger-currency-search placeholder="搜索港币、Hong Kong、HKD…" value="${escapeAttribute(currencyQuery)}" autocomplete="off">
-          </label>
-          <p class="ledger-search-help">支持中文名、英文名、代码、符号和国家或地区</p>
+          <p class="ledger-search-help">仅提供美元和人民币；已有账单后本位币保持锁定。</p>
           <div class="ledger-currency-results" data-ledger-currency-results>${renderCurrencyResultsMarkup()}</div>
         </div>
       </dialog>`;
@@ -1401,7 +1373,7 @@
     const participantIds = [...new Set(formData.getAll("participantIds").map(String))]
       .filter((id) => travelerById(id));
 
-    if (!availableCurrencyCodes(currency).includes(currency)) {
+    if (!["USD", "CNY"].includes(currency) && !ledgerData.bills.some((bill) => bill.id === editingBillId && bill.currency === currency)) {
       setFormError(form, "请选择本次旅程使用的币种。");
       return;
     }
@@ -1656,7 +1628,7 @@
   }
 
   async function chooseCurrency(code) {
-    if (!CURRENCY_BY_CODE.has(code)) return;
+    if (!["USD", "CNY"].includes(code)) return;
     captureBillDraft();
     if (currencyPickerMode === "base") {
       if (ledgerData.bills.length) {
