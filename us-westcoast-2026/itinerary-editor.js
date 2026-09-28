@@ -1,10 +1,13 @@
-/* Local-only edits for the authored day-by-day itinerary. */
+/* Authored itinerary overrides, kept locally or shared through D1. */
 window.TravelItineraryEditor = (() => {
   const FORMAT = "west26-local-itinerary";
   const VERSION = 1;
   let lastFocus = null;
   let lastDay = null;
   let loadError = "";
+  let legacyOverrides = {};
+  let cloudVersion = 0;
+  let remoteLoaded = false;
 
   const clone = (value) => JSON.parse(JSON.stringify(value));
   const textValue = (value, limit, label, required = false) => {
@@ -80,7 +83,8 @@ window.TravelItineraryEditor = (() => {
     if (element) element.textContent = message;
   }
 
-  function saveOverrides(next) {
+  async function saveOverrides(next) {
+    if (!window.TravelProfile?.canEdit()) throw new Error("只有 Weiyang 可以编辑行程");
     const backup = {
       format: FORMAT,
       version: VERSION,
@@ -88,14 +92,27 @@ window.TravelItineraryEditor = (() => {
       savedAt: new Date().toISOString(),
       days: next
     };
+    if (state.config.persistence.mode === "d1") {
+      if (!remoteLoaded) throw new Error("共享行程尚未载入，暂时不能保存");
+      const response = await fetch(`/api/itinerary/${encodeURIComponent(state.data.metadata.tripId)}`, {
+        method: "PUT",
+        headers: { "content-type": "application/json", "x-travel-actor": window.TravelProfile.getActor() },
+        body: JSON.stringify({ version: cloudVersion, days: next })
+      });
+      if (response.status === 409) throw new Error("行程在另一台设备上更新过，请刷新页面后再编辑");
+      if (!response.ok) throw new Error("云端保存失败，请检查网络或 D1 配置");
+      const result = await response.json();
+      cloudVersion = result.version;
+      next = normalizeBackup({ ...backup, days: result.days });
+    }
     try {
-      localStorage.setItem(state.itineraryStorageKey, JSON.stringify(backup));
+      localStorage.setItem(state.itineraryStorageKey, JSON.stringify({ ...backup, days: next }));
     } catch {
-      throw new Error("无法保存到此浏览器。请检查浏览器存储权限或可用空间。");
+      if (state.config.persistence.mode !== "d1") throw new Error("无法保存到此浏览器。请检查浏览器存储权限或可用空间。");
     }
     state.itineraryOverrides = next;
     applyOverrides();
-    setStatus(`已在本机保存 ${Object.keys(next).length} 天的修改`);
+    setStatus(`已${state.config.persistence.mode === "d1" ? "同步到云端" : "在本机保存"} ${Object.keys(next).length} 天的修改`);
   }
 
   function load() {
@@ -104,12 +121,44 @@ window.TravelItineraryEditor = (() => {
     try {
       const stored = localStorage.getItem(state.itineraryStorageKey);
       state.itineraryOverrides = stored ? normalizeBackup(JSON.parse(stored)) : {};
+      legacyOverrides = clone(state.itineraryOverrides);
     } catch (error) {
       console.warn("Could not load local itinerary edits", error);
       loadError = "本机行程备份无法读取；当前显示原始行程。可导入之前导出的备份。";
       state.itineraryOverrides = {};
     }
     applyOverrides();
+  }
+
+  async function loadShared() {
+    if (state.config.persistence.mode !== "d1") return;
+    try {
+      const response = await fetch(`/api/itinerary/${encodeURIComponent(state.data.metadata.tripId)}`, { cache: "no-store" });
+      if (!response.ok) throw new Error(`API ${response.status}`);
+      const result = await response.json();
+      cloudVersion = Number(result.version) || 0;
+      state.itineraryOverrides = normalizeBackup({ format: FORMAT, version: VERSION, tripId: state.data.metadata.tripId, days: result.days || {} });
+      remoteLoaded = true;
+      loadError = "";
+      applyOverrides();
+      try { await migrateIfNeeded(); }
+      catch (error) { console.error("Could not migrate local itinerary", error); }
+      setStatus(`已载入云端行程 · ${Object.keys(state.itineraryOverrides).length} 天修改`);
+    } catch (error) {
+      console.error("Could not load shared itinerary", error);
+      state.itineraryOverrides = {};
+      applyOverrides();
+      remoteLoaded = false;
+      loadError = "共享行程暂时无法读取；当前显示原始行程，编辑已暂停。";
+      setStatus(loadError);
+    }
+  }
+
+  async function migrateIfNeeded() {
+    if (state.config.persistence.mode !== "d1" || !remoteLoaded || cloudVersion !== 0 ||
+        !Object.keys(legacyOverrides).length || !window.TravelProfile?.canEdit()) return;
+    await saveOverrides(legacyOverrides);
+    legacyOverrides = {};
   }
 
   function mapValue(item) {
@@ -146,6 +195,7 @@ window.TravelItineraryEditor = (() => {
   }
 
   function open(dayNumber) {
+    if (!window.TravelProfile?.canEdit()) return;
     const day = state.data.days.find((entry) => entry.day === dayNumber);
     if (!day) return;
     lastFocus = document.activeElement;
@@ -226,7 +276,7 @@ window.TravelItineraryEditor = (() => {
       const target = lastFocus?.isConnected ? lastFocus : $(`[data-edit-day="${lastDay}"]`);
       target?.focus?.();
     });
-    dialog.addEventListener("click", (event) => {
+    dialog.addEventListener("click", async (event) => {
       if (event.target === dialog || event.target.closest("[data-edit-close]")) { dialog.close(); return; }
       const rows = $(".itinerary-edit-rows", dialog);
       if (event.target.closest("[data-edit-add]")) {
@@ -250,20 +300,20 @@ window.TravelItineraryEditor = (() => {
         try {
           const next = { ...state.itineraryOverrides };
           delete next[dayNumber];
-          saveOverrides(next);
+          await saveOverrides(next);
           state.expandedDay = dayNumber;
           renderTimeline(true);
           dialog.close();
         } catch (error) { editorStatus(error.message); }
       }
     });
-    dialog.addEventListener("submit", (event) => {
+    dialog.addEventListener("submit", async (event) => {
       event.preventDefault();
       const form = event.target;
       try {
         const dayNumber = Number(form.dataset.day);
         const edit = collectEditor(form);
-        saveOverrides({ ...state.itineraryOverrides, [dayNumber]: edit });
+        await saveOverrides({ ...state.itineraryOverrides, [dayNumber]: edit });
         state.expandedDay = dayNumber;
         renderTimeline(true);
         dialog.close();
@@ -278,20 +328,20 @@ window.TravelItineraryEditor = (() => {
       if (file.size > 1024 * 1024) { setStatus("备份文件过大，请选择行程 JSON 备份"); return; }
       try {
         const next = normalizeBackup(JSON.parse(await file.text()));
-        if (Object.keys(state.itineraryOverrides).length && !confirm("导入将替换本机已保存的行程修改。继续吗？")) return;
-        saveOverrides(next);
+        if (Object.keys(state.itineraryOverrides).length && !confirm(`导入将替换${state.config.persistence.mode === "d1" ? "云端" : "本机"}已保存的行程修改。继续吗？`)) return;
+        await saveOverrides(next);
         renderTimeline(true);
       } catch (error) { setStatus(`导入失败：${error.message}`); }
     };
-    $("#itinerary-reset-all").onclick = () => {
-      if (!Object.keys(state.itineraryOverrides).length) { setStatus("当前没有本机修改"); return; }
-      if (!confirm("恢复全部原始行程？本机修改会被清除。")) return;
-      try { saveOverrides({}); renderTimeline(true); }
+    $("#itinerary-reset-all").onclick = async () => {
+      if (!Object.keys(state.itineraryOverrides).length) { setStatus("当前没有行程修改"); return; }
+      if (!confirm(`恢复全部原始行程？${state.config.persistence.mode === "d1" ? "云端" : "本机"}修改会被清除。`)) return;
+      try { await saveOverrides({}); renderTimeline(true); }
       catch (error) { setStatus(error.message); }
     };
     if (loadError) setStatus(loadError);
-    else if (Object.keys(state.itineraryOverrides).length) setStatus(`已加载 ${Object.keys(state.itineraryOverrides).length} 天的本机修改`);
+    else if (Object.keys(state.itineraryOverrides).length) setStatus(`已加载 ${Object.keys(state.itineraryOverrides).length} 天的${state.config.persistence.mode === "d1" ? "云端" : "本机"}修改`);
   }
 
-  return { load, setup, open };
+  return { load, loadShared, migrateIfNeeded, setup, open };
 })();

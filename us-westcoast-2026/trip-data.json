@@ -13,7 +13,9 @@
     },
     "language": "zh-CN",
     "persistence": {
-      "mode": "local"
+      "mode": "d1",
+      "sharedCollections": ["tickets", "ledger"],
+      "apiBase": "/api/trip"
     }
   },
   "metadata": {
@@ -1005,8 +1007,8 @@
   "restaurants": [],
   "bookingsAndTickets": [],
   "ticketPlanning": {
-    "statusStorage": "local",
-    "statusStorageNote": "门票状态默认只保存在当前浏览器。",
+    "statusStorage": "d1",
+    "statusStorageNote": "门票状态同步给四位旅伴，由 Weiyang 更新。",
     "items": []
   },
   "preTrip": {

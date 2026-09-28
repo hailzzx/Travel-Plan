@@ -456,7 +456,7 @@ function inlineTicketMarkup(ticket) {
   return `
     <div class="schedule-ticket ${purchased ? "is-purchased" : `is-${escapeHtml(ticket.requirement)}`}" data-inline-ticket="${escapeHtml(ticket.id)}">
       <label class="schedule-ticket__toggle">
-        <input type="checkbox" value="${escapeHtml(ticket.id)}" ${purchased ? "checked" : ""} aria-label="${purchased ? "取消已购票" : "标记为已购票"}：${escapeHtml(title)}">
+        <input type="checkbox" value="${escapeHtml(ticket.id)}" ${purchased ? "checked" : ""} ${window.TravelProfile?.canEdit() ? "" : "disabled"} aria-label="${purchased ? "取消已购票" : "标记为已购票"}：${escapeHtml(title)}">
         <span class="schedule-ticket__check" aria-hidden="true">✓</span>
         <span class="schedule-ticket__content">
           <span class="schedule-ticket__status">${purchased ? "已购票" : escapeHtml(ticketRequirement(ticket))}</span>
@@ -505,7 +505,7 @@ function dayCard(day) {
       <span class="day-dot" aria-hidden="true"></span>
       <button class="day-toggle" type="button" aria-expanded="${expanded}" aria-controls="day-detail-${day.day}">
         <span>
-          <span class="day-meta">DAY ${String(day.day).padStart(2, "0")} · ${escapeHtml(formatCompactDate(day.date))}${isToday ? " · 今天" : ""}${state.itineraryOverrides[day.day] ? " · 本机已编辑" : ""}</span>
+          <span class="day-meta">DAY ${String(day.day).padStart(2, "0")} · ${escapeHtml(formatCompactDate(day.date))}${isToday ? " · 今天" : ""}${state.itineraryOverrides[day.day] ? ` · ${state.config.persistence.mode === "d1" ? "行程已更新" : "本机已编辑"}` : ""}</span>
           <span class="day-title">${escapeHtml(day.title)}</span>
           <span class="day-locations">${escapeHtml(day.locations.join(" → "))}</span>
           ${ticketSummary}
@@ -513,7 +513,7 @@ function dayCard(day) {
         <span class="day-chevron" aria-hidden="true">+</span>
       </button>
       <div class="day-detail" id="day-detail-${day.day}" ${expanded ? "" : "hidden"}>
-        <div class="day-edit-actions"><button type="button" data-edit-day="${day.day}">编辑这一天 ↗</button></div>
+        ${window.TravelProfile?.canEdit() ? `<div class="day-edit-actions"><button type="button" data-edit-day="${day.day}">编辑这一天 ↗</button></div>` : ""}
         <ol class="schedule">${schedule}</ol>
         ${costs ? `<div class="costs">${costs}</div>` : ""}
         ${notes.map((note) => `<p class="detail-note">${escapeHtml(note)}</p>`).join("")}
@@ -606,6 +606,7 @@ function renderTimeline(preserveExpanded = false) {
   $("#timeline").onclick = (event) => {
     const editButton = event.target.closest("[data-edit-day]");
     if (editButton) {
+      if (!window.TravelProfile?.canEdit()) return;
       window.TravelItineraryEditor.open(Number(editButton.dataset.editDay));
       return;
     }
@@ -632,6 +633,7 @@ function renderTimeline(preserveExpanded = false) {
   $("#timeline").onchange = (event) => {
     const checkbox = event.target.closest(".schedule-ticket input[type='checkbox']");
     if (!checkbox) return;
+    if (!window.TravelProfile?.canEdit()) { checkbox.checked = !checkbox.checked; return; }
     if (checkbox.checked) state.purchasedTickets.add(checkbox.value);
     else state.purchasedTickets.delete(checkbox.value);
     saveTicketState(checkbox.value, checkbox.checked);
@@ -770,9 +772,12 @@ function createRuntimeAdapters() {
     ...(moduleEnabled("todo") ? ["todos"] : []),
     ...(moduleEnabled("itinerary") ? ["tickets"] : [])
   ];
-  const localCollections = enabledCollections.filter((collection) => persistence.mode !== "d1" || !sharedCollections.has(collection));
+  const localCollections = enabledCollections.filter((collection) => collection !== "todos" && (persistence.mode !== "d1" || !sharedCollections.has(collection)));
   const d1Collections = enabledCollections.filter((collection) => persistence.mode === "d1" && sharedCollections.has(collection));
   const localAdapter = localCollections.length ? storage.createAdapter({ mode: "local", tripId, collections: localCollections }) : null;
+  const todoAdapter = enabledCollections.includes("todos") && !d1Collections.includes("todos")
+    ? storage.createAdapter({ mode: "local", tripId: `${tripId}:todo:${window.TravelProfile?.getActor() || "guest"}`, collections: ["todos"] })
+    : null;
   const d1Adapter = d1Collections.length ? storage.createAdapter({
     mode: "d1",
     tripId,
@@ -782,6 +787,7 @@ function createRuntimeAdapters() {
   state.runtimeAdapters = {};
   localCollections.forEach((collection) => { state.runtimeAdapters[collection] = localAdapter; });
   d1Collections.forEach((collection) => { state.runtimeAdapters[collection] = d1Adapter; });
+  if (todoAdapter) state.runtimeAdapters.todos = todoAdapter;
 }
 
 async function loadSharedState() {
@@ -792,13 +798,32 @@ async function loadSharedState() {
     try { hasLocalTodoSnapshot = localStorage.getItem(todoAdapter.storageKey) !== null; }
     catch { hasLocalTodoSnapshot = false; }
   }
-  const snapshots = await Promise.all(adapters.map(async (adapter) => [adapter, await adapter.load()]));
+  const snapshots = await Promise.all(adapters.map(async (adapter) => {
+    try { return [adapter, await adapter.load()]; }
+    catch (error) { console.error(`Could not load ${adapter.mode} travel data`, error); return [adapter, {}]; }
+  }));
+  if (state.runtimeAdapters.todos !== todoAdapter) return;
   const snapshotFor = (collection) => snapshots.find(([adapter]) => adapter === state.runtimeAdapters[collection])?.[1] || {};
   const todoSnapshot = snapshotFor("todos");
   const ticketSnapshot = snapshotFor("tickets");
   state.todos = Array.isArray(todoSnapshot.todos) ? todoSnapshot.todos : [];
   state.purchasedTickets = new Set((Array.isArray(ticketSnapshot.tickets) ? ticketSnapshot.tickets : []).filter((item) => item.completed).map((item) => item.id));
   const authoredTodos = state.data.preTrip?.todoItems || state.data.preTrip?.packingItems || [];
+  if (todoAdapter?.mode === "local" && !hasLocalTodoSnapshot && !state.todos.length && window.TravelProfile?.getActor()) {
+    const tripId = state.data.metadata.tripId;
+    const migrationKey = `travel-plan:todo-migrated:v1:${encodeURIComponent(tripId)}`;
+    try {
+      if (!localStorage.getItem(migrationKey)) {
+        const legacy = JSON.parse(localStorage.getItem(`travel-plan:runtime:v1:${encodeURIComponent(tripId)}`) || "null");
+        const previousTodos = Array.isArray(legacy?.todos) ? legacy.todos : [];
+        state.todos = previousTodos.filter((item) => item && typeof item.id === "string" && typeof item.text === "string");
+        if (state.todos.length) {
+          await Promise.all(state.todos.map((todo) => todoAdapter.applyChange("todos", todo, "upsert")));
+          localStorage.setItem(migrationKey, window.TravelProfile.getActor());
+        }
+      }
+    } catch (error) { console.warn("Could not migrate personal checklist", error); }
+  }
   if (todoAdapter?.mode === "local" && !hasLocalTodoSnapshot && !state.todos.length && authoredTodos.length) {
     state.todos = authoredTodos.map((item, index) => ({
       id: String(item.id || `todo-initial-${index + 1}`),
@@ -810,6 +835,7 @@ async function loadSharedState() {
 }
 
 async function saveSharedChange(collection, value, op = "upsert") {
+  if (collection !== "todos" && !window.TravelProfile?.canEdit()) throw new Error("只有 Weiyang 可以编辑共享内容");
   const adapter = state.runtimeAdapters[collection];
   if (!adapter) return null;
   return adapter.applyChange(collection, value, op);
@@ -996,6 +1022,7 @@ async function init() {
     state.data = await response.json();
     state.config = normalizeTripConfig(state.data.config);
     if (moduleEnabled("itinerary")) window.TravelItineraryEditor.load();
+    if (moduleEnabled("itinerary")) await window.TravelItineraryEditor.loadShared();
     window.TRAVEL_PLAN_CONFIG = state.config;
     window.TRAVEL_PLAN_DATA = state.data;
     document.dispatchEvent(new CustomEvent("travel-data-ready", { detail: state.data }));
@@ -1036,3 +1063,29 @@ async function init() {
 }
 
 document.addEventListener("DOMContentLoaded", init);
+window.addEventListener("travel-profile:changed", async () => {
+  if (!state.data) return;
+  const editorDialog = document.getElementById("itinerary-editor-dialog");
+  if (!window.TravelProfile?.canEdit() && editorDialog?.open) editorDialog.close();
+  if (moduleEnabled("todo")) {
+    createRuntimeAdapters();
+    try { await loadSharedState(); } catch (error) { console.error("Could not switch personal checklist", error); }
+  }
+  if (moduleEnabled("itinerary")) {
+    try { await window.TravelItineraryEditor.migrateIfNeeded(); }
+    catch (error) { console.error("Could not migrate local itinerary", error); }
+    renderTimeline(true);
+  }
+  if (moduleEnabled("todo")) renderTodoList();
+  await window.TravelLedger?.migrateLocalIfNeeded?.();
+  window.TravelLedger?.render?.();
+});
+
+document.addEventListener("visibilitychange", async () => {
+  if (document.hidden || state.config?.persistence.mode !== "d1") return;
+  try {
+    if (moduleEnabled("itinerary")) { await window.TravelItineraryEditor.loadShared(); renderTimeline(true); }
+    if (moduleEnabled("itinerary")) { await loadSharedState(); renderTimeline(true); }
+    if (moduleEnabled("ledger")) await window.TravelLedger?.refresh?.();
+  } catch (error) { console.error("Could not refresh shared travel data", error); }
+});

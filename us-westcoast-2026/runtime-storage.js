@@ -186,15 +186,8 @@
     const tripId = normalizeTripId(options.tripId);
     const apiBase = normalizeApiBase(options.apiBase || "/api/trip");
     const ownedCollections = normalizeCollections(options.collections);
-    const ownedRecordCollections = RECORD_COLLECTIONS.filter((collection) => ownedCollections.includes(collection));
+    const ownedRecordCollections = [...RECORD_COLLECTIONS, "settings"].filter((collection) => ownedCollections.includes(collection));
     if (!ownedRecordCollections.length) throw new Error("D1 mode requires an explicit shared record collection allowlist");
-    const settingsAdapter = createLocalAdapter({
-      tripId,
-      storage: options.storage,
-      storageKey: options.settingsStorageKey,
-      storageKeyPrefix: options.storageKeyPrefix || `${DEFAULT_KEY_PREFIX}:d1-settings`,
-      collections: ["settings"]
-    });
     let previous = null;
     let queue = Promise.resolve();
 
@@ -202,31 +195,18 @@
       return `${apiBase}/${encodeURIComponent(tripId)}?collections=${encodeURIComponent(ownedRecordCollections.join(","))}`;
     }
 
-    async function readLocalSettings() {
-      const local = await settingsAdapter.load();
-      return local.settings;
-    }
-
-    async function withLocalSettings(remote) {
-      const snapshot = scopeSnapshot(remote, ownedCollections);
-      if (ownedCollections.includes("settings")) {
-        const localSettings = await readLocalSettings();
-        if (localSettings) snapshot.settings = localSettings;
-      }
-      return snapshot;
-    }
-
     async function request(method, changes) {
+      if (method !== "GET" && !globalThis.TravelProfile?.canEdit()) throw new Error("只有 Weiyang 可以编辑共享内容");
       const init = method === "GET"
         ? { cache: "no-store" }
         : {
             method,
-            headers: { "content-type": "application/json" },
+            headers: { "content-type": "application/json", "x-travel-actor": globalThis.TravelProfile.getActor() },
             body: JSON.stringify({ changes })
           };
       const response = await fetch(endpoint(), init);
       if (!response.ok) throw new Error(`API ${response.status}`);
-      previous = await withLocalSettings(await response.json());
+      previous = scopeSnapshot(await response.json(), ownedCollections);
       return normalizeSnapshot(previous);
     }
 
@@ -246,11 +226,16 @@
       async save(snapshot) {
         return enqueue(async () => {
           const next = normalizeSnapshot(snapshot);
-          if (ownedCollections.includes("settings")) {
-            await settingsAdapter.applyChange("settings", next.settings || {}, "upsert");
-          }
           const changes = [];
           for (const collection of ownedRecordCollections) {
+            if (collection === "settings") {
+              if (JSON.stringify(previous?.settings) !== JSON.stringify(next.settings)) {
+                changes.push(next.settings
+                  ? { op: "upsert", collection, id: "ledger", value: { ...next.settings, id: "ledger" } }
+                  : { op: "delete", collection, id: "ledger" });
+              }
+              continue;
+            }
             const before = new Map((previous?.[collection] || []).map((item) => [String(item.id), item]));
             const after = new Map(next[collection].map((item) => [String(item.id), item]));
             before.forEach((_, id) => {
@@ -284,9 +269,7 @@
             throw new Error(`Runtime collection is not enabled for this D1 adapter: ${collection}`);
           }
           if (collection === "settings") {
-            const local = await settingsAdapter.applyChange(collection, value, op);
-            if (previous) previous.settings = local.settings;
-            return previous ? normalizeSnapshot(previous) : withLocalSettings(emptySnapshot());
+            return request("POST", [{ op, collection, id: "ledger", ...(op === "upsert" ? { value: { ...deepClone(value), id: "ledger" } } : {}) }]);
           }
           const id = String(typeof value === "object" && value !== null ? value.id || "" : value || "").trim();
           if (!id) throw new Error(`${collection} records require a stable id`);

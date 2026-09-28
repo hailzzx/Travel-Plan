@@ -391,13 +391,13 @@
       });
     }
     let previous = null;
-    const collections = ["bills", "travelers"];
+    const collections = ["bills", "travelers", "settings"];
     const rawApiBase = String(options.apiBase || "/api/trip").trim();
     if (!/^\/(?!\/)/.test(rawApiBase) || rawApiBase.includes("\\") || /[?#]/.test(rawApiBase)) {
       throw new Error("D1 apiBase must be a same-origin absolute path");
     }
     const apiBase = rawApiBase.replace(/\/+$/, "") || "/";
-    const endpoint = `${apiBase}/${encodeURIComponent(tripId)}?collections=bills%2Ctravelers`;
+    const endpoint = `${apiBase}/${encodeURIComponent(tripId)}?collections=bills%2Ctravelers%2Csettings`;
     return {
       mode: "d1",
       async load() {
@@ -409,6 +409,12 @@
       async save(next) {
         const changes = [];
         for (const collection of collections) {
+          if (collection === "settings") {
+            if (JSON.stringify(previous?.settings) !== JSON.stringify(next.settings)) {
+              changes.push({ op: "upsert", collection, id: "ledger", value: { ...next.settings, id: "ledger" } });
+            }
+            continue;
+          }
           const before = new Map((previous?.[collection] || []).map((item) => [item.id, item]));
           const after = new Map((next[collection] || []).map((item) => [item.id, item]));
           before.forEach((_, id) => { if (!after.has(id)) changes.push({ op: "delete", collection, id }); });
@@ -417,7 +423,7 @@
           });
         }
         const response = await fetch(endpoint, {
-          method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ changes })
+          method: "POST", headers: { "content-type": "application/json", "x-travel-actor": globalThis.TravelProfile?.getActor() || "" }, body: JSON.stringify({ changes })
         });
         if (!response.ok) throw new Error(`API ${response.status}`);
         previous = await response.json();
@@ -735,6 +741,7 @@
   }
 
   function renderBillNoteControl(bill, options = {}) {
+    if (!globalThis.TravelProfile?.canEdit()) return `<p class="ledger-bill-note-static"><span>备注：</span>${escapeHtml(bill.note || "暂无")}</p>`;
     const editing = options.editing ?? editingNoteBillId === bill.id;
     const value = options.value ?? bill.note ?? "";
     return editing ? `
@@ -907,7 +914,7 @@
             <button class="ledger-add-person" type="button" data-ledger-action="open-members" aria-label="添加同行人"><span aria-hidden="true">＋</span><small>添加</small></button>
           </div>
         </section>
-        ${renderBillForm()}
+        ${globalThis.TravelProfile?.canEdit() ? renderBillForm() : ""}
         ${renderBillList()}
       </section>`;
   }
@@ -1134,6 +1141,11 @@
 
   function renderApp() {
     if (!ledgerRoot || !ledgerData) return;
+    if (!globalThis.TravelProfile?.canEdit()) {
+      editingBillId = null;
+      editingNoteBillId = null;
+      openDialogName = null;
+    }
     ledgerRoot.innerHTML = `
       <div class="ledger-app" data-ledger-trip-id="${escapeAttribute(ledgerTripId)}">
         <header class="ledger-page-header">
@@ -1191,6 +1203,7 @@
   }
 
   async function mutateData(mutator, options = {}) {
+    if (!globalThis.TravelProfile?.canEdit()) { setNotice("只有 Weiyang 可以编辑账目"); return false; }
     return enqueueMutation(async () => {
       const next = deepClone(ledgerData);
       mutator(next);
@@ -1736,6 +1749,7 @@
     if (!button || !ledgerRoot.contains(button)) return;
     event.preventDefault();
     const action = button.dataset.ledgerAction;
+    if (!globalThis.TravelProfile?.canEdit() && !["set-tab", "close-dialog"].includes(action)) return;
     const insideNoteForm = button.closest('[data-ledger-form="bill-note"]');
     if (editingNoteBillId
       && !insideNoteForm
@@ -1772,6 +1786,7 @@
     const form = event.target.closest("form[data-ledger-form]");
     if (!form || !ledgerRoot.contains(form)) return;
     event.preventDefault();
+    if (!globalThis.TravelProfile?.canEdit()) return;
     if (form.dataset.ledgerForm === "bill-note") {
       await submitBillNote(form);
       return;
@@ -1842,6 +1857,19 @@
         ? "共享账本暂时无法读取，请检查你的 Cloudflare D1 配置。"
         : "本地账本暂时无法读取，已打开一份空账本。";
     }
+    if (ledgerPersistenceMode === "d1" && !stored?.bills?.length && !stored?.travelers?.length && globalThis.TravelProfile?.canEdit()) {
+      try {
+        const legacy = await createLocalStorageAdapter(ledgerTripId).load();
+        if (legacy?.bills?.length) {
+          const imported = normalizeData(legacy);
+          await ledgerAdapter.save(imported, { tripId: ledgerTripId });
+          stored = imported;
+          notice = `已将本机的 ${imported.bills.length} 笔账目同步到云端`;
+        }
+      } catch (error) {
+        console.error("Could not migrate local bills", error);
+      }
+    }
     ledgerData = normalizeData(stored);
     if (!ledgerData.travelers.length && Array.isArray(options.initialTravelers) && options.initialTravelers.length) {
       ledgerData = normalizeData({
@@ -1851,10 +1879,12 @@
           name: String(name || "").trim()
         }))
       });
-      try {
-        await Promise.resolve(ledgerAdapter.save(ledgerData, { tripId: ledgerTripId }));
-      } catch (error) {
-        console.warn("TravelLedger could not save initial travelers; using them in this tab.", error);
+      if (globalThis.TravelProfile?.canEdit()) {
+        try {
+          await Promise.resolve(ledgerAdapter.save(ledgerData, { tripId: ledgerTripId }));
+        } catch (error) {
+          console.warn("TravelLedger could not save initial travelers; using them in this tab.", error);
+        }
       }
     }
     activeTab = location.hash === "#ledger-stats" ? "stats" : "entry";
@@ -1870,9 +1900,46 @@
     return deepClone(ledgerData);
   }
 
+  async function refresh() {
+    if (!initialized || !ledgerAdapter || editingBillId || editingNoteBillId) return;
+    try {
+      captureBillDraft();
+      const latest = await ledgerAdapter.load({ tripId: ledgerTripId });
+      if (!latest?.travelers?.length && !latest?.bills?.length && ledgerData.travelers.length) {
+        latest.travelers = deepClone(ledgerData.travelers);
+      }
+      ledgerData = normalizeData(latest);
+      renderApp();
+    } catch (error) {
+      console.error("Could not refresh shared ledger", error);
+      setNotice("共享账本暂时无法刷新");
+    }
+  }
+
+  async function migrateLocalIfNeeded() {
+    if (!initialized || ledgerPersistenceMode !== "d1" || !globalThis.TravelProfile?.canEdit()) return;
+    try {
+      const remote = await ledgerAdapter.load({ tripId: ledgerTripId });
+      if (remote?.bills?.length || remote?.travelers?.length) return;
+      const legacy = await createLocalStorageAdapter(ledgerTripId).load();
+      if (!legacy?.bills?.length) return;
+      const imported = normalizeData(legacy);
+      await ledgerAdapter.save(imported, { tripId: ledgerTripId });
+      ledgerData = normalizeData(imported);
+      notice = `已将本机的 ${imported.bills.length} 笔账目同步到云端`;
+      renderApp();
+    } catch (error) {
+      console.error("Could not migrate local bills", error);
+      setNotice("本机旧账目暂时无法迁入云端");
+    }
+  }
+
   const publicApi = {
     init,
     setActiveTab,
+    render: renderApp,
+    refresh,
+    migrateLocalIfNeeded,
     createLocalStorageAdapter,
     createD1Adapter,
     getPersistenceMode() {
