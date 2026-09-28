@@ -194,6 +194,10 @@ body, body[data-active-view="ledger"] {
 #itinerary-storage-status:empty { display: none; }
 .day-edit-actions { display: flex; justify-content: flex-end; margin: 0 0 16px; }
 .day-edit-actions button { border-color: var(--forest); color: #fff3d9; background: var(--forest); }
+.schedule-link-pair { display: inline-flex; align-items: center; gap: 5px; }
+.schedule-map-link, .schedule-xhs-link { min-height: 32px; padding: 6px 10px; display: inline-flex; align-items: center; border: 1px solid #aebda8; border-radius: 999px; color: var(--forest); background: #edf0df; text-decoration: none; font-size: 11px; font-weight: 750; line-height: 1.2; cursor: pointer; }
+.schedule-xhs-link { border-color: #dfb49d; color: #a34e35; background: #f8e8da; }
+.schedule-map-link:hover, .schedule-xhs-link:hover { border-color: currentColor; }
 .itinerary-editor-dialog { width: min(calc(100% - 24px), 700px); max-height: min(91dvh, 900px); margin: auto; padding: 0; border: 1px solid #bda983; border-radius: 20px; color: var(--ink); background: #fff8e8; box-shadow: 0 28px 70px #22352d55; }
 .itinerary-editor-dialog::backdrop { background: #13251d9c; backdrop-filter: blur(3px); }
 .itinerary-editor-dialog form { display: flex; flex-direction: column; max-height: min(91dvh, 900px); }

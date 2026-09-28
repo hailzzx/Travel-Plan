@@ -474,9 +474,13 @@ function dayCard(day) {
   const expanded = state.expandedDay === day.day;
   const schedule = day.schedule.map((item) => {
     const destinations = navigationDestinations(item);
-    const mapLinks = destinations.map((destination) => `
-      <button type="button" class="schedule-map-link" data-map-query="${escapeHtml(destination.query)}" data-map-url="${escapeHtml(destination.url || "")}" data-map-label="${escapeHtml(destination.label)}" aria-haspopup="dialog" aria-controls="place-map" aria-label="查看 ${escapeHtml(destination.label)} 的地图">📍 ${escapeHtml(destination.label)}</button>
-    `).join("");
+    const mapLinks = destinations.map((destination) => {
+      const xiaohongshuUrl = `https://www.xiaohongshu.com/search_result?keyword=${encodeURIComponent(destination.label)}&source=web_explore_feed`;
+      return `<span class="schedule-link-pair">
+        <button type="button" class="schedule-map-link" data-map-query="${escapeHtml(destination.query)}" data-map-url="${escapeHtml(destination.url || "")}" data-map-label="${escapeHtml(destination.label)}" aria-haspopup="dialog" aria-controls="place-map" aria-label="查看 ${escapeHtml(destination.label)} 的地图">地图</button>
+        <a class="schedule-xhs-link" href="${escapeHtml(xiaohongshuUrl)}" target="_blank" rel="noopener noreferrer" aria-label="在小红书搜索 ${escapeHtml(destination.label)}">小红书</a>
+      </span>`;
+    }).join("");
     const scheduleTickets = ticketsForSchedule(day, item).map(inlineTicketMarkup).join("");
     return `
       <li class="schedule-item">
