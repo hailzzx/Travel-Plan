@@ -5,7 +5,10 @@ const state = {
   expandedDay: null,
   countdownTimer: null,
   purchasedTickets: new Set(),
-  todos: []
+  todos: [],
+  originalDays: [],
+  itineraryOverrides: {},
+  itineraryStorageKey: ""
 };
 
 const MODULE_NAMES = Object.freeze(["flights", "overview", "itinerary", "todo", "driving", "ledger"]);
@@ -498,7 +501,7 @@ function dayCard(day) {
       <span class="day-dot" aria-hidden="true"></span>
       <button class="day-toggle" type="button" aria-expanded="${expanded}" aria-controls="day-detail-${day.day}">
         <span>
-          <span class="day-meta">DAY ${String(day.day).padStart(2, "0")} · ${escapeHtml(formatCompactDate(day.date))}${isToday ? " · 今天" : ""}</span>
+          <span class="day-meta">DAY ${String(day.day).padStart(2, "0")} · ${escapeHtml(formatCompactDate(day.date))}${isToday ? " · 今天" : ""}${state.itineraryOverrides[day.day] ? " · 本机已编辑" : ""}</span>
           <span class="day-title">${escapeHtml(day.title)}</span>
           <span class="day-locations">${escapeHtml(day.locations.join(" → "))}</span>
           ${ticketSummary}
@@ -506,6 +509,7 @@ function dayCard(day) {
         <span class="day-chevron" aria-hidden="true">+</span>
       </button>
       <div class="day-detail" id="day-detail-${day.day}" ${expanded ? "" : "hidden"}>
+        <div class="day-edit-actions"><button type="button" data-edit-day="${day.day}">编辑这一天 ↗</button></div>
         <ol class="schedule">${schedule}</ol>
         ${costs ? `<div class="costs">${costs}</div>` : ""}
         ${notes.map((note) => `<p class="detail-note">${escapeHtml(note)}</p>`).join("")}
@@ -515,6 +519,10 @@ function dayCard(day) {
 }
 
 function navigationDestinations(item) {
+  if (item.mapDisabled) return [];
+  if (typeof item.mapQuery === "string" && item.mapQuery.trim()) {
+    return [{ label: item.mapLabel || item.mapQuery, query: item.mapQuery.trim(), url: "" }];
+  }
   const policy = state.data.mapLinks?.navigationPolicy || { noNavigationTypes: [], selfNavigationTypes: [] };
   if (policy.noNavigationTypes.includes(item.type)) return [];
   const referencedPlaceIds = [...new Set([
@@ -586,12 +594,17 @@ function currentTripDay() {
   return state.data.days.find((day) => day.date === today)?.day || null;
 }
 
-function renderTimeline() {
+function renderTimeline(preserveExpanded = false) {
   const today = currentTripDay();
-  state.expandedDay = today;
+  if (!preserveExpanded) state.expandedDay = today;
   $("#day-count").textContent = `${state.data.days.length} DAYS`;
   $("#timeline").innerHTML = state.data.days.map(dayCard).join("");
   $("#timeline").onclick = (event) => {
+    const editButton = event.target.closest("[data-edit-day]");
+    if (editButton) {
+      window.TravelItineraryEditor.open(Number(editButton.dataset.editDay));
+      return;
+    }
     const ticketButton = event.target.closest("[data-ticket-open]");
     if (ticketButton) {
       openTicketDialog(ticketButton.dataset.ticketOpen, ticketButton);
@@ -968,7 +981,7 @@ function startCountdowns() {
 function preloadDefaultRouteMap() {
   const image = new Image();
   image.decoding = "async";
-  image.src = "assets/western-states.svg";
+  image.src = "assets/california-painted-atlas.jpg";
   state.routeMapPreload = image;
 }
 
@@ -978,6 +991,7 @@ async function init() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     state.data = await response.json();
     state.config = normalizeTripConfig(state.data.config);
+    if (moduleEnabled("itinerary")) window.TravelItineraryEditor.load();
     window.TRAVEL_PLAN_CONFIG = state.config;
     window.TRAVEL_PLAN_DATA = state.data;
     document.dispatchEvent(new CustomEvent("travel-data-ready", { detail: state.data }));
@@ -1001,7 +1015,10 @@ async function init() {
         state.purchasedTickets = new Set();
       }
     }
-    if (moduleEnabled("itinerary")) renderTimeline();
+    if (moduleEnabled("itinerary")) {
+      window.TravelItineraryEditor.setup();
+      renderTimeline();
+    }
     if (moduleEnabled("driving")) renderRental();
     if (moduleEnabled("todo")) renderTravelPrep();
     if (moduleEnabled("ledger")) {
