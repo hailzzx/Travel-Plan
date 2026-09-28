@@ -1827,6 +1827,20 @@
     }
   }
 
+  function legacyMigrationKey() {
+    return `travel-plan:ledger-migrated:v1:${encodeURIComponent(ledgerTripId)}`;
+  }
+
+  function legacyImportCompleted() {
+    try { return localStorage.getItem(legacyMigrationKey()) === "1"; }
+    catch { return false; }
+  }
+
+  function markLegacyImported() {
+    try { localStorage.setItem(legacyMigrationKey(), "1"); }
+    catch { /* D1 remains the source of truth if browser storage is unavailable. */ }
+  }
+
   async function init(options = {}) {
     const requestedRoot = typeof options.root === "string"
       ? document.querySelector(options.root)
@@ -1857,12 +1871,13 @@
         ? "共享账本暂时无法读取，请检查你的 Cloudflare D1 配置。"
         : "本地账本暂时无法读取，已打开一份空账本。";
     }
-    if (ledgerPersistenceMode === "d1" && !stored?.bills?.length && !stored?.travelers?.length && globalThis.TravelProfile?.canEdit()) {
+    if (ledgerPersistenceMode === "d1" && !stored?.bills?.length && !legacyImportCompleted() && globalThis.TravelProfile?.canEdit()) {
       try {
         const legacy = await createLocalStorageAdapter(ledgerTripId).load();
         if (legacy?.bills?.length) {
           const imported = normalizeData(legacy);
           await ledgerAdapter.save(imported, { tripId: ledgerTripId });
+          markLegacyImported();
           stored = imported;
           notice = `已将本机的 ${imported.bills.length} 笔账目同步到云端`;
         }
@@ -1917,14 +1932,15 @@
   }
 
   async function migrateLocalIfNeeded() {
-    if (!initialized || ledgerPersistenceMode !== "d1" || !globalThis.TravelProfile?.canEdit()) return;
+    if (!initialized || ledgerPersistenceMode !== "d1" || legacyImportCompleted() || !globalThis.TravelProfile?.canEdit()) return;
     try {
       const remote = await ledgerAdapter.load({ tripId: ledgerTripId });
-      if (remote?.bills?.length || remote?.travelers?.length) return;
+      if (remote?.bills?.length) return;
       const legacy = await createLocalStorageAdapter(ledgerTripId).load();
       if (!legacy?.bills?.length) return;
       const imported = normalizeData(legacy);
       await ledgerAdapter.save(imported, { tripId: ledgerTripId });
+      markLegacyImported();
       ledgerData = normalizeData(imported);
       notice = `已将本机的 ${imported.bills.length} 笔账目同步到云端`;
       renderApp();
