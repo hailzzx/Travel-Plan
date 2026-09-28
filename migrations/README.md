@@ -2,6 +2,7 @@
 
 The Pages site uses the static files in `us-westcoast-2026/` and the Pages Functions in `functions/`.
 The D1 binding name is `TRAVEL_DB`. Apply `0001_shared_trip.sql` to the production database before enabling the `d1` mode in `trip-data.json`.
+The Cloudflare Pages project uses the repository root, build command `exit 0`, and output directory `us-westcoast-2026`. The build command is required for this static site's Pages Functions to be included in Git deployments.
 
 Shared D1 records: ledger bills and currency settings, traveler roster, ticket status, and itinerary day overrides. The pre-trip checklist stays in browser storage, scoped to the selected avatar. Poster artwork, bookings, flights, and base itinerary remain in `trip-data.json` and static assets.
 
